@@ -1,1 +1,147 @@
-<p>home works!</p>
+<div class="showcase-container">
+
+  <!-- Barra de Búsqueda y Encabezado del Escaparate -->
+  <header class="showcase-header">
+    <div class="header-titles">
+      <span class="sub-tag">Explora y Descubre</span>
+      <h1>Catálogo del Gimnasio</h1>
+    </div>
+    
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Buscar clases, entrenadores, programas..." />
+    </div>
+  </header>
+
+  <!-- Banner Promocional / Novedad Destacada -->
+  <section class="hero-banner">
+    <div class="banner-overlay">
+      <span class="banner-badge">🔥 Novedad de la Semana</span>
+      <h2>Masterclass de Halterofilia & Potencia</h2>
+      <p>Aprende las técnicas de Snatch y Clean & Jerk con nuestro entrenador olímpico invitado.</p>
+      <div class="banner-actions">
+        <button class="btn-banner-primary">Reservar Plaza Gratis</button>
+        <span class="banner-info-tag">🗓️ Sábado 12 de Octubre • 11:00 AM</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categorías / Filtros Rápidos -->
+  <section class="categories-section">
+    <div class="categories-scroll">
+      <button 
+        *ngFor="let cat of categories" 
+        class="category-chip" 
+        [class.active]="selectedCategory === cat.id"
+        (click)="selectCategory(cat.id)">
+        <span>{{ cat.icon }}</span> {{ cat.name }}
+      </button>
+    </div>
+  </section>
+
+  <!-- ESCAPARATE 1: Clases Dirigidas Destacadas -->
+  <section class="showcase-block">
+    <div class="section-title">
+      <div>
+        <h2>📅 Clases Dirigidas Próximas</h2>
+        <p>Reserva tu lugar en tiempo real antes de que se agoten las plazas.</p>
+      </div>
+      <a href="#ver-todas" class="link-more">Ver todas →</a>
+    </div>
+
+    <div class="cards-grid">
+      <div *ngFor="let item of filteredClasses" class="class-card">
+        <div class="card-image-box">
+          <img [src]="item.image" [alt]="item.title" />
+          <span class="level-badge">{{ item.level }}</span>
+          <span class="spots-badge" [class.urgent]="item.spotsLeft <= 3">
+            {{ item.spotsLeft }} plazas libres
+          </span>
+        </div>
+        <div class="card-content">
+          <small class="time-text">⏱️ {{ item.time }}</small>
+          <h3>{{ item.title }}</h3>
+          <p class="instructor-text">👤 Con <strong>{{ item.instructor }}</strong></p>
+          
+          <div class="card-footer">
+            <button class="btn-action">Reservar Clase</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESCAPARATE 2: Programas de Entrenamiento Guiados -->
+  <section class="showcase-block">
+    <div class="section-title">
+      <div>
+        <h2>🏆 Programas de Entrenamiento Destacados</h2>
+        <p>Planes estructurados paso a paso para seguir a tu propio ritmo.</p>
+      </div>
+    </div>
+
+    <div class="programs-grid">
+      <div *ngFor="let program of programs" class="program-card">
+        <div class="program-image-box">
+          <img [src]="program.image" [alt]="program.title" />
+          <span *ngIf="program.badge" class="promo-badge">{{ program.badge }}</span>
+        </div>
+        <div class="program-content">
+          <span class="program-meta">{{ program.weeks }} Semanas &nbsp;•&nbsp; {{ program.level }}</span>
+          <h3>{{ program.title }}</h3>
+          <button class="btn-secondary-card">Explorar Programa</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESCAPARATE 3: Entrenadores Personales -->
+  <section class="showcase-block">
+    <div class="section-title">
+      <div>
+        <h2>💪 Entrenadores Personales</h2>
+        <p>Reserva asesorías 1 a 1 para maximizar tu rendimiento.</p>
+      </div>
+    </div>
+
+    <div class="trainers-grid">
+      <div *ngFor="let trainer of trainers" class="trainer-card">
+        <img [src]="trainer.image" [alt]="trainer.name" class="trainer-avatar" />
+        <div class="trainer-info">
+          <h3>{{ trainer.name }}</h3>
+          <p class="specialty">{{ trainer.specialty }}</p>
+          <div class="rating">
+            <span class="star">★</span> 
+            <strong>{{ trainer.rating }}</strong> 
+            <small>({{ trainer.reviewsCount }} opiniones)</small>
+          </div>
+        </div>
+        <button class="btn-trainer-contact">Pedir Cita</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESCAPARATE 4: Servicios Extra y Tienda -->
+  <section class="showcase-block services-block">
+    <div class="section-title">
+      <div>
+        <h2>🛍️ Servicios Extra & Promociones</h2>
+        <p>Aprovecha los beneficios de tu tarifa de gimnasio.</p>
+      </div>
+    </div>
+
+    <div class="services-grid">
+      <div *ngFor="let service of services" class="service-card">
+        <div class="service-icon">{{ service.icon }}</div>
+        <div class="service-details">
+          <span class="service-badge">{{ service.badge }}</span>
+          <h3>{{ service.title }}</h3>
+          <p>{{ service.description }}</p>
+          <strong class="service-price">{{ service.price }}</strong>
+        </div>
+        <button class="btn-service-add">Solicitar</button>
+      </div>
+    </div>
+  </section>
+
+</div>
