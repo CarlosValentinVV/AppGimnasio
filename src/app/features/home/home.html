@@ -15,11 +15,11 @@
 
     <div class="cabecera-acciones">
       <button
+        class="boton-tema"
+        type="button"
         (click)="toggleTheme()"
         [attr.aria-label]="isDarkMode() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
-        class="boton-tema"
         title="Cambiar tema"
-        type="button"
       >
         @if (isDarkMode()) {
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -42,11 +42,11 @@
 
       <a class="boton boton-primario boton-pequeno" href="#planes">Probar gratis</a>
       <button
+        class="menu-hamburguesa"
+        type="button"
         (click)="toggleMobileMenu()"
         [attr.aria-expanded]="mobileMenuOpen()"
         aria-label="Abrir menú de navegación"
-        class="menu-hamburguesa"
-        type="button"
       >
         <svg class="icono-menu" fill="none" stroke="currentColor" viewBox="0 0 24 24"
              xmlns="http://www.w3.org/2000/svg">
@@ -135,7 +135,7 @@
 
     <div class="hero-estadisticas">
       <div class="contenedor grid-estadisticas">
-        @for (stat of stats(); track stat.label; let idx = $index) {
+        @for (stat of data().stats; track stat.label; let idx = $index) {
           <div [class]="'delay-' + (idx + 1)" class="estadistica-item reveal reveal-up">
             <span class="estadistica-valor">{{ stat.value }}</span>
             <span class="estadistica-etiqueta">{{ stat.label }}</span>
@@ -157,7 +157,7 @@
       </div>
 
       <div class="grid-caracteristicas">
-        @for (feat of features(); track feat.title; let idx = $index) {
+        @for (feat of data().features; track feat.title; let idx = $index) {
           <div [class]="'delay-' + ((idx % 4) + 1)" class="tarjeta-caracteristica reveal reveal-up">
             <div class="caracteristica-icono-wrapper">
               @if (feat.icon === 'dumbbell') {
@@ -202,34 +202,34 @@
 
       <div class="filtros-categorias reveal reveal-up delay-1">
         <button
+          type="button"
           (click)="setCategory('todas')"
           [class.activo]="selectedCategory() === 'todas'"
           class="filtro-btn"
-          type="button"
         >
           Todas las clases
         </button>
         <button
+          type="button"
           (click)="setCategory('fuerza')"
           [class.activo]="selectedCategory() === 'fuerza'"
           class="filtro-btn"
-          type="button"
         >
           Fuerza & Acondicionamiento
         </button>
         <button
+          type="button"
           (click)="setCategory('cardio')"
           [class.activo]="selectedCategory() === 'cardio'"
           class="filtro-btn"
-          type="button"
         >
           Cardio & HIIT
         </button>
         <button
+          type="button"
           (click)="setCategory('mente')"
           [class.activo]="selectedCategory() === 'mente'"
           class="filtro-btn"
-          type="button"
         >
           Mente & Cuerpo
         </button>
@@ -274,18 +274,18 @@
 
         <div class="selector-facturacion">
           <button
+            type="button"
             (click)="setBillingCycle('mensual')"
             [class.activo]="billingCycle() === 'mensual'"
             class="toggle-facturacion"
-            type="button"
           >
             Facturación Mensual
           </button>
           <button
+            type="button"
             (click)="setBillingCycle('anual')"
             [class.activo]="billingCycle() === 'anual'"
             class="toggle-facturacion"
-            type="button"
           >
             Facturación Anual <span class="badge-descuento">-20% Dto</span>
           </button>
@@ -293,67 +293,35 @@
       </div>
 
       <div class="grid-planes">
-        <div class="tarjeta-plan reveal reveal-up delay-1">
-          <div class="plan-header">
-            <h3>Pase Básico</h3>
-            <p class="plan-sub">Para entrenar por tu cuenta</p>
-            <div class="plan-precio">
-              <span class="precio-simbolo">€</span>
-              <span class="precio-monto">{{ billingCycle() === 'mensual' ? '29' : '24' }}</span>
-              <span class="precio-periodo">/ mes</span>
+        @for (plan of data().plans; track plan.name; let idx = $index) {
+          <div [class.plan-destacado]="plan.popular" [class]="'delay-' + (idx + 1)"
+               class="tarjeta-plan reveal reveal-up">
+            @if (plan.popular) {
+              <div class="insignia-popular">MÁS POPULAR</div>
+            }
+            <div class="plan-header">
+              <h3>{{ plan.name }}</h3>
+              <p class="plan-sub">{{ plan.sub }}</p>
+              <div class="plan-precio">
+                <span class="precio-simbolo">€</span>
+                <span class="precio-monto">{{ billingCycle() === 'mensual' ? plan.mensual : plan.anual }}</span>
+                <span class="precio-periodo">/ mes</span>
+              </div>
             </div>
+            <ul class="plan-caracteristicas">
+              @for (feat of plan.features; track feat) {
+                <li><span class="check">✓</span> {{ feat }}</li>
+              }
+              @for (feat of plan.inactives; track feat) {
+                <li class="inactivo"><span class="check">✕</span> {{ feat }}</li>
+              }
+            </ul>
+            <a [class.boton-primario]="plan.popular" [class.boton-secundario]="!plan.popular" class="boton boton-full"
+               href="#">
+              {{ plan.popular ? 'Empezar la semana gratis' : 'Empezar 7 Días Gratis' }}
+            </a>
           </div>
-          <ul class="plan-caracteristicas">
-            <li><span class="check">✓</span> Acceso ilimitado a sala de pesas y cardio</li>
-            <li><span class="check">✓</span> Vestuarios, duchas y taquilla gratuita</li>
-            <li><span class="check">✓</span> App móvil de seguimiento básico</li>
-            <li class="inactivo"><span class="check">✕</span> Clases dirigidas semanales</li>
-            <li class="inactivo"><span class="check">✕</span> Evaluación nutricional inicial</li>
-          </ul>
-          <a class="boton boton-secundario boton-full" href="#">Empezar 7 Días Gratis</a>
-        </div>
-
-        <div class="tarjeta-plan plan-destacado reveal reveal-scale delay-2">
-          <div class="insignia-popular">MÁS POPULAR</div>
-          <div class="plan-header">
-            <h3>Pase PRO Total</h3>
-            <p class="plan-sub">Acceso total + todas las clases</p>
-            <div class="plan-precio">
-              <span class="precio-simbolo">€</span>
-              <span class="precio-monto">{{ billingCycle() === 'mensual' ? '45' : '36' }}</span>
-              <span class="precio-periodo">/ mes</span>
-            </div>
-          </div>
-          <ul class="plan-caracteristicas">
-            <li><span class="check">✓</span> <strong>Primera semana 100% gratis</strong></li>
-            <li><span class="check">✓</span> Acceso ilimitado a sala de musculación</li>
-            <li><span class="check">✓</span> <strong>Acceso total a +20 clases dirigidas</strong></li>
-            <li><span class="check">✓</span> Asesoramiento técnico en sala continuo</li>
-            <li><span class="check">✓</span> Evaluación corporal y nutricional inicial</li>
-            <li><span class="check">✓</span> Vestuarios VIP y taquillas electrónicas</li>
-          </ul>
-          <a class="boton boton-primario boton-full" href="#">Empezar la semana gratis</a>
-        </div>
-
-        <div class="tarjeta-plan reveal reveal-up delay-3">
-          <div class="plan-header">
-            <h3>Plan Elite 1 a 1</h3>
-            <p class="plan-sub">Entrenamiento personal + nutrición</p>
-            <div class="plan-precio">
-              <span class="precio-simbolo">€</span>
-              <span class="precio-monto">{{ billingCycle() === 'mensual' ? '89' : '75' }}</span>
-              <span class="precio-periodo">/ mes</span>
-            </div>
-          </div>
-          <ul class="plan-caracteristicas">
-            <li><span class="check">✓</span> Todo lo incluido en el Pase PRO</li>
-            <li><span class="check">✓</span> 4 Sesiones de Entrenamiento Personal/mes</li>
-            <li><span class="check">✓</span> Plan de nutrición deportiva a medida</li>
-            <li><span class="check">✓</span> Medición mensual por Bioimpedancia</li>
-            <li><span class="check">✓</span> Soporte prioritario por WhatsApp</li>
-          </ul>
-          <a class="boton boton-secundario boton-full" href="#">Solicitar información</a>
-        </div>
+        }
       </div>
     </div>
   </section>
@@ -369,7 +337,7 @@
       </div>
 
       <div class="grid-testimonios">
-        @for (t of testimonials(); track t.name; let idx = $index) {
+        @for (t of data().testimonials; track t.name; let idx = $index) {
           <div [class]="'delay-' + (idx + 1)" class="tarjeta-testimonio reveal reveal-up">
             <div class="testimonio-estrellas">
               @for (star of [1, 2, 3, 4, 5]; track star) {
@@ -401,7 +369,7 @@
       </div>
 
       <div class="faq-lista">
-        @for (faq of faqs(); track faq.question; let i = $index) {
+        @for (faq of data().faqs; track faq.question; let i = $index) {
           <div [class.abierto]="openFaqIndex() === i" class="faq-item reveal reveal-up">
             <button (click)="toggleFaq(i)" class="faq-pregunta" type="button">
               <span>{{ faq.question }}</span>
