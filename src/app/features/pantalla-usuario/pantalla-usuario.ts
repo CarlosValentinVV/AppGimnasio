@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 
-import datosPantalla from './pantalla-usuario.json';
+import datosPantalla from './usuario.json';
 
 export interface Usuario {
   nombre: string;
