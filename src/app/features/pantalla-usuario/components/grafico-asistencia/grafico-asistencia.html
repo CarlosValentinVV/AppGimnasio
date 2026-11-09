@@ -1,0 +1,21 @@
+<section class="tarjeta">
+  <h2 class="titulo-tarjeta">Asistencia semanal</h2>
+  <p class="subtitulo-tarjeta">Entrenamientos por día esta semana</p>
+
+  <div [attr.aria-label]="'Entrenamientos esta semana: ' + total()" class="grafico-semanal" role="img">
+    @for (dia of asistencias(); track dia.dia) {
+      <div class="grafico-col">
+        <div class="grafico-zona">
+          <span class="grafico-valor">{{ dia.visitas > 0 ? dia.visitas : '' }}</span>
+          <div [class.vacia]="dia.visitas === 0" [style.height.%]="(dia.visitas / maxVisitas()) * 100"
+               class="grafico-barra"></div>
+        </div>
+        <span class="grafico-dia">{{ dia.dia }}</span>
+      </div>
+    }
+  </div>
+
+  <p class="grafico-total">
+    Total: <strong>{{ total() }} entrenamientos</strong> esta semana
+  </p>
+</section>

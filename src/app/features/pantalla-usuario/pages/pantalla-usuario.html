@@ -1,0 +1,56 @@
+<div class="perfil-fondo">
+  <div class="perfil-brillo perfil-brillo-1"></div>
+  <div class="perfil-brillo perfil-brillo-2"></div>
+
+  <div class="contenedor-perfil">
+    <app-perfil-cabecera
+      (cambiarTema)="toggleTheme()"
+      [modoOscuro]="isDarkMode()"
+      [porcentajeNivel]="porcentajeNivel()"
+      [usuario]="usuario()"
+    />
+
+    <!-- Navegación por pestañas -->
+    <nav aria-label="Secciones del perfil" class="tabs">
+      <button (click)="setPestana('resumen')" [class.activo]="pestanaActiva() === 'resumen'" class="tab"
+              type="button">
+        Resumen
+      </button>
+      <button (click)="setPestana('asistencia')" [class.activo]="pestanaActiva() === 'asistencia'" class="tab"
+              type="button">
+        Asistencia
+      </button>
+      <button (click)="setPestana('datos')" [class.activo]="pestanaActiva() === 'datos'" class="tab"
+              type="button">
+        Datos personales
+      </button>
+    </nav>
+
+    <!-- Pestaña: Resumen -->
+    @if (pestanaActiva() === 'resumen') {
+      <app-estadisticas-perfil [estadisticas]="estadisticas()" />
+
+      <div class="grid-dos-columnas">
+        <app-lista-visitas [visitas]="visitasRecientes()" />
+        <app-lista-logros [logros]="logros()" />
+      </div>
+    }
+
+    <!-- Pestaña: Asistencia -->
+    @if (pestanaActiva() === 'asistencia') {
+      <div class="grid-dos-columnas">
+        <app-grafico-asistencia [asistencias]="asistenciasSemana()" />
+        <app-anillo-objetivo [diasMes]="objetivo().diasMes" [meta]="objetivo().meta" />
+      </div>
+    }
+
+    <!-- Pestaña: Datos personales -->
+    @if (pestanaActiva() === 'datos') {
+      <div class="grid-dos-columnas">
+        <app-lista-datos [datos]="datosPersonales()" />
+        <app-tarjeta-membresia [membresia]="membresia()" [miembroDesde]="usuario().miembroDesde"
+                               [plan]="usuario().plan" />
+      </div>
+    }
+  </div>
+</div>

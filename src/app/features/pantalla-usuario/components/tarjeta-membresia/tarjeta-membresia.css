@@ -1,0 +1,121 @@
+:host {
+  display: block;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+h2, p {
+  margin: 0;
+  padding: 0;
+}
+
+.tarjeta {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: var(--sombra-tarjeta);
+  padding: 2rem;
+}
+
+.tarjeta-membresia {
+  display: flex;
+  flex-direction: column;
+}
+
+.titulo-tarjeta {
+  font-family: var(--fuente-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--tinta-principal);
+}
+
+.subtitulo-tarjeta {
+  color: var(--tinta-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.membresia-cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.membresia-plan {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 14px;
+  background: var(--accent-suave);
+  border: 1px solid var(--border-color);
+}
+
+.membresia-nombre {
+  font-family: var(--fuente-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--tinta-principal);
+}
+
+.estado-cuota {
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 0.3rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--aviso-color);
+}
+
+.estado-cuota.ok {
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--exito-color);
+}
+
+.membresia-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.9rem;
+}
+
+.membresia-etiqueta {
+  color: var(--tinta-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.membresia-valor {
+  color: var(--tinta-principal);
+  font-weight: 700;
+  font-size: 0.925rem;
+  text-align: right;
+}
+
+.boton-gestionar {
+  margin-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fuente-base);
+  font-weight: 700;
+  font-size: 0.925rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background: var(--accent-color);
+  color: var(--accent-text);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.boton-gestionar:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--accent-glow);
+}

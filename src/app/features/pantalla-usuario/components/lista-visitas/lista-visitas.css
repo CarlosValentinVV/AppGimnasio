@@ -1,0 +1,113 @@
+:host {
+  display: block;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+h2, p, ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+.tarjeta {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: var(--sombra-tarjeta);
+  padding: 2rem;
+}
+
+.titulo-tarjeta {
+  font-family: var(--fuente-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--tinta-principal);
+}
+
+.subtitulo-tarjeta {
+  color: var(--tinta-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.lista-visitas {
+  display: flex;
+  flex-direction: column;
+}
+
+.visita {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.visita:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.visita-fecha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  background: var(--accent-suave);
+}
+
+.visita-dia {
+  font-family: var(--fuente-display);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--accent-color);
+  line-height: 1.2;
+}
+
+.visita-semana {
+  font-size: 0.7rem;
+  color: var(--tinta-muted);
+  font-weight: 600;
+}
+
+.visita-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.visita-zona {
+  font-weight: 700;
+  color: var(--tinta-principal);
+  font-size: 0.95rem;
+}
+
+.visita-detalle {
+  font-size: 0.825rem;
+  color: var(--tinta-muted);
+}
+
+.visita-duracion {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--accent-color);
+  background: var(--accent-suave);
+  padding: 0.3rem 0.85rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .visita {
+    flex-wrap: wrap;
+  }
+}

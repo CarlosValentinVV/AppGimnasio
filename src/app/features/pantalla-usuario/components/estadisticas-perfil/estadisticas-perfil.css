@@ -1,0 +1,68 @@
+:host {
+  display: block;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.grid-estadisticas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.tarjeta {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: var(--sombra-tarjeta);
+}
+
+.tarjeta-estadistica {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.tarjeta-estadistica:hover {
+  border-color: var(--border-highlight);
+  transform: translateY(-4px);
+}
+
+.estadistica-icono {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--accent-suave);
+  color: var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.estadistica-icono svg {
+  width: 22px;
+  height: 22px;
+}
+
+.estadistica-valor {
+  font-family: var(--fuente-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--tinta-principal);
+  line-height: 1.1;
+}
+
+.estadistica-etiqueta {
+  font-weight: 700;
+  color: var(--tinta-principal);
+  margin-top: 0.25rem;
+}
+
+.estadistica-detalle {
+  font-size: 0.825rem;
+  color: var(--tinta-muted);
+}

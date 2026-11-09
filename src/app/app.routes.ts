@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home';
-import { PantallaUsuario } from './features/pantalla-usuario/pantalla-usuario';
+import { PantallaUsuario } from './features/pantalla-usuario/pages/pantalla-usuario';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },

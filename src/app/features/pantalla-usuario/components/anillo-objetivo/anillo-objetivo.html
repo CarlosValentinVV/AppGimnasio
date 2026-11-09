@@ -1,0 +1,22 @@
+<section class="tarjeta tarjeta-objetivo">
+  <h2 class="titulo-tarjeta">Objetivo mensual</h2>
+  <p class="subtitulo-tarjeta">Días entrenados frente a tu meta</p>
+
+  <div class="anillo-envoltorio">
+    <svg class="anillo" viewBox="0 0 120 120">
+      <circle class="anillo-fondo" cx="60" cy="60" r="52" />
+      <circle [attr.stroke-dasharray]="circunferencia" [attr.stroke-dashoffset]="circunferencia - (circunferencia * porcentaje()) / 100" class="anillo-progreso" cx="60"
+              cy="60"
+              r="52" />
+    </svg>
+    <div class="anillo-texto">
+      <span class="anillo-valor">{{ porcentaje() }}%</span>
+      <span class="anillo-etiqueta">completado</span>
+    </div>
+  </div>
+
+  <p class="objetivo-detalle">
+    Has ido <strong>{{ diasMes() }} de {{ meta() }} días</strong> este mes.
+    Te quedan {{ restantes() }} días para completar tu objetivo.
+  </p>
+</section>
