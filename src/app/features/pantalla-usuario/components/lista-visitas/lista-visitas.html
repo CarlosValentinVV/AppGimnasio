@@ -1,0 +1,20 @@
+<section class="tarjeta">
+  <h2 class="titulo-tarjeta">Actividad reciente</h2>
+  <p class="subtitulo-tarjeta">Tus últimas visitas al gimnasio</p>
+
+  <ul class="lista-visitas">
+    @for (visita of visitas(); track visita.fecha + visita.horaEntrada) {
+      <li class="visita">
+        <div class="visita-fecha">
+          <span class="visita-dia">{{ visita.fecha }}</span>
+          <span class="visita-semana">{{ visita.diaSemana }}</span>
+        </div>
+        <div class="visita-info">
+          <span class="visita-zona">{{ visita.zona }}</span>
+          <span class="visita-detalle">Entrada a las {{ visita.horaEntrada }}</span>
+        </div>
+        <span class="visita-duracion">{{ visita.duracion }}</span>
+      </li>
+    }
+  </ul>
+</section>

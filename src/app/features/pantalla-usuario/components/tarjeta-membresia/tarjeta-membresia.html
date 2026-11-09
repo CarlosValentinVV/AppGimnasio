@@ -1,0 +1,30 @@
+<section class="tarjeta tarjeta-membresia">
+  <h2 class="titulo-tarjeta">Membresía</h2>
+  <p class="subtitulo-tarjeta">Estado de tu suscripción al gimnasio</p>
+
+  <div class="membresia-cuerpo">
+    <div class="membresia-plan">
+      <span class="membresia-nombre">{{ plan() }}</span>
+      <span [class.ok]="membresia().estadoCuota === 'Al día'" class="estado-cuota">
+        {{ membresia().estadoCuota }}
+      </span>
+    </div>
+
+    <div class="membresia-fila">
+      <span class="membresia-etiqueta">Próxima renovación</span>
+      <span class="membresia-valor">{{ membresia().proximaRenovacion }}</span>
+    </div>
+    <div class="membresia-fila">
+      <span class="membresia-etiqueta">Miembro desde</span>
+      <span class="membresia-valor">{{ miembroDesde() }}</span>
+    </div>
+    <div class="membresia-fila">
+      <span class="membresia-etiqueta">Días entrenados totales</span>
+      <span class="membresia-valor">128 días</span>
+    </div>
+
+    <button (click)="gestionar.emit()" class="boton-gestionar" type="button">
+      Gestionar suscripción
+    </button>
+  </div>
+</section>

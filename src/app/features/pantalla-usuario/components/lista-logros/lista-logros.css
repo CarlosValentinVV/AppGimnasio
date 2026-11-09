@@ -1,0 +1,86 @@
+:host {
+  display: block;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+h2, p {
+  margin: 0;
+  padding: 0;
+}
+
+.tarjeta {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: var(--sombra-tarjeta);
+  padding: 2rem;
+}
+
+.titulo-tarjeta {
+  font-family: var(--fuente-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--tinta-principal);
+}
+
+.subtitulo-tarjeta {
+  color: var(--tinta-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.grid-logros {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.logro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+  padding: 1.25rem 0.75rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  background: var(--accent-suave);
+  transition: all 0.3s ease;
+}
+
+.logro:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-highlight);
+}
+
+.logro.bloqueado {
+  opacity: 0.45;
+  filter: grayscale(1);
+  background: transparent;
+}
+
+.logro-icono {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  color: var(--accent-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logro-icono svg {
+  width: 20px;
+  height: 20px;
+}
+
+.logro-titulo {
+  font-size: 0.825rem;
+  font-weight: 700;
+  color: var(--tinta-principal);
+  line-height: 1.3;
+}
