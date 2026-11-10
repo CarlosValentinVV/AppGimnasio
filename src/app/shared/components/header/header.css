@@ -74,6 +74,24 @@ a {
   height: 21px;
 }
 
+.marca-logo {
+  background: none;
+  box-shadow: 0 4px 14px rgba(7, 10, 16, 0.25);
+  object-fit: cover;
+}
+
+.marca-logo--oscuro {
+  display: none;
+}
+
+:host-context(.modo-oscuro) .marca-logo--claro {
+  display: none;
+}
+
+:host-context(.modo-oscuro) .marca-logo--oscuro {
+  display: inline-flex;
+}
+
 .marca-texto {
   color: var(--tinta-principal, #0f172a);
 }

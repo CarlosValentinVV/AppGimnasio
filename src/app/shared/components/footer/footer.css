@@ -75,6 +75,24 @@ a {
   height: 21px;
 }
 
+.pie-marca-logo {
+  background: none;
+  box-shadow: 0 4px 14px rgba(7, 10, 16, 0.25);
+  object-fit: cover;
+}
+
+.pie-marca-logo--oscuro {
+  display: none;
+}
+
+:host-context(.modo-oscuro) .pie-marca-logo--claro {
+  display: none;
+}
+
+:host-context(.modo-oscuro) .pie-marca-logo--oscuro {
+  display: inline-flex;
+}
+
 .pie-descripcion {
   margin-top: 1.15rem;
   max-width: 34ch;

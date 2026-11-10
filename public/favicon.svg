@@ -1,0 +1,114 @@
+<svg aria-label="Jimnasio" height="512" role="img" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .fondo-a {
+      stop-color: #ffffff;
+    }
+
+    .fondo-b {
+      stop-color: #e6edf7;
+    }
+
+    .jota-a {
+      stop-color: #3b82f6;
+    }
+
+    .jota-b {
+      stop-color: #1d4ed8;
+    }
+
+    .barra {
+      fill: #7d8ea4;
+    }
+
+    .plato-interno {
+      fill: #93a3b8;
+    }
+
+    .plato-externo {
+      fill: #b0bfd0;
+    }
+
+    .tope {
+      fill: #5f6f85;
+    }
+
+    .contorno {
+      fill: #ffffff;
+      stroke: #ffffff;
+    }
+
+    .jota {
+      fill: url(#jota);
+      stroke: url(#jota);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .fondo-a {
+        stop-color: #16213a;
+      }
+
+      .fondo-b {
+        stop-color: #070a10;
+      }
+
+      .jota-a {
+        stop-color: #93c5fd;
+      }
+
+      .jota-b {
+        stop-color: #3b82f6;
+      }
+
+      .barra {
+        fill: #8fa0b5;
+      }
+
+      .plato-interno {
+        fill: #b6c2d1;
+      }
+
+      .plato-externo {
+        fill: #e2e8f0;
+      }
+
+      .tope {
+        fill: #64748b;
+      }
+
+      .contorno {
+        fill: #070a10;
+        stroke: #070a10;
+      }
+    }
+  </style>
+
+  <defs>
+    <linearGradient id="fondo" x1="0" x2="1" y1="0" y2="1">
+      <stop class="fondo-a" offset="0" />
+      <stop class="fondo-b" offset="1" />
+    </linearGradient>
+    <linearGradient id="jota" x1="0" x2="0" y1="0" y2="1">
+      <stop class="jota-a" offset="0" />
+      <stop class="jota-b" offset="1" />
+    </linearGradient>
+  </defs>
+
+  <rect fill="url(#fondo)" height="512" rx="112" width="512" />
+
+  <!-- mancuerna -->
+  <g>
+    <rect class="barra" height="36" rx="18" width="400" x="56" y="238" />
+    <rect class="plato-interno" height="128" rx="12" width="36" x="120" y="192" />
+    <rect class="plato-interno" height="128" rx="12" width="36" x="356" y="192" />
+    <rect class="plato-externo" height="180" rx="16" width="48" x="72" y="166" />
+    <rect class="plato-externo" height="180" rx="16" width="48" x="392" y="166" />
+    <rect class="tope" height="84" rx="12" width="32" x="40" y="214" />
+    <rect class="tope" height="84" rx="12" width="32" x="440" y="214" />
+  </g>
+
+  <!-- monograma J -->
+  <path class="contorno" d="M165 96 H363 V438 H149 V374 H299 V160 H165 Z"
+        stroke-linejoin="round" stroke-width="44" />
+  <path class="jota" d="M165 96 H363 V438 H149 V374 H299 V160 H165 Z"
+        stroke-linejoin="round" stroke-width="20" />
+</svg>
