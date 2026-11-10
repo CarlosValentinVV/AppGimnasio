@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+
+import { ThemeService } from '../../services/theme.service';
 import { Header } from './header';
 
 describe('Header', () => {
@@ -7,9 +10,9 @@ describe('Header', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Header]
-    })
-      .compileComponents();
+      imports: [Header],
+      providers: [provideRouter([])],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Header);
     component = fixture.componentInstance;
@@ -18,5 +21,31 @@ describe('Header', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('debe mostrar la marca y los enlaces principales', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('.marca-texto')?.textContent).toContain('JIMNASIO');
+    expect(compiled.querySelectorAll('.navegacion-desktop .nav-enlace').length).toBe(5);
+  });
+
+  it('debe alternar el menú móvil', () => {
+    expect(component.mobileMenuOpen()).toBeFalse();
+    component.toggleMobileMenu();
+    expect(component.mobileMenuOpen()).toBeTrue();
+    component.closeMobileMenu();
+    expect(component.mobileMenuOpen()).toBeFalse();
+  });
+
+  it('debe alternar el tema compartido', () => {
+    const themeService = TestBed.inject(ThemeService);
+    themeService.setDarkMode(false);
+
+    expect(component.isDarkMode()).toBeFalse();
+    component.toggleTheme();
+    expect(component.isDarkMode()).toBeTrue();
+    component.toggleTheme();
+    expect(component.isDarkMode()).toBeFalse();
   });
 });

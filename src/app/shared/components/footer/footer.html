@@ -1,1 +1,136 @@
-<p>footer works!</p>
+<footer class="pie">
+  <div class="pie-contenedor">
+    <div class="pie-grid">
+      <div class="pie-marca-columna">
+        <a aria-label="Jimnasio Gym, inicio" class="pie-marca" routerLink="/">
+          <span aria-hidden="true" class="pie-marca-icono">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                 viewBox="0 0 24 24">
+              <path d="M6.5 6.5h11M6.5 17.5h11M4 9v6M20 9v6M8 4v16M16 4v16" />
+            </svg>
+          </span>
+          <span>JIMNASIO</span>
+        </a>
+
+        <p class="pie-descripcion">
+          Tu gimnasio de alto rendimiento en Madrid. Sala de pesas, más de 20 clases dirigidas y entrenadores que te
+          acompañan en cada repetición.
+        </p>
+
+        <div aria-label="Redes sociales" class="pie-social">
+          <a aria-label="Instagram" href="https://instagram.com" rel="noopener noreferrer" target="_blank">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                 viewBox="0 0 24 24">
+              <rect height="20" rx="5" width="20" x="2" y="2" />
+              <circle cx="12" cy="12" r="4" />
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+            </svg>
+          </a>
+          <a aria-label="X" href="https://x.com" rel="noopener noreferrer" target="_blank">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          </a>
+          <a aria-label="YouTube" href="https://youtube.com" rel="noopener noreferrer" target="_blank">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z" />
+            </svg>
+          </a>
+          <a aria-label="Facebook" href="https://facebook.com" rel="noopener noreferrer" target="_blank">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                 viewBox="0 0 24 24">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <nav aria-label="Enlaces del gimnasio" class="pie-columna">
+        <h3>Gimnasio</h3>
+        <ul>
+          @for (enlace of enlacesGimnasio; track enlace.etiqueta) {
+            <li>
+              <a [fragment]="enlace.fragmento" routerLink="/">{{ enlace.etiqueta }}</a>
+            </li>
+          }
+        </ul>
+      </nav>
+
+      <nav aria-label="Membresías" class="pie-columna">
+        <h3>Membresías</h3>
+        <ul>
+          @for (enlace of enlacesMembresias; track enlace.etiqueta) {
+            <li>
+              <a [fragment]="enlace.fragmento" routerLink="/">{{ enlace.etiqueta }}</a>
+            </li>
+          }
+        </ul>
+      </nav>
+
+      <div class="pie-columna pie-contacto">
+        <h3>Contacto</h3>
+        <ul>
+          <li>
+            <span aria-hidden="true" class="pie-contacto-icono">
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                   viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </span>
+            <span>Calle del Hierro, 12<br />28045 Madrid</span>
+          </li>
+          <li>
+            <span aria-hidden="true" class="pie-contacto-icono">
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                   viewBox="0 0 24 24">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+            </span>
+            <a href="tel:910000000">910 000 000</a>
+          </li>
+          <li>
+            <span aria-hidden="true" class="pie-contacto-icono">
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                   viewBox="0 0 24 24">
+                <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+            </span>
+            <a href="mailto:hola@jimnasio.es">hola@jimnasio.es</a>
+          </li>
+          <li>
+            <span aria-hidden="true" class="pie-contacto-icono">
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                   viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </span>
+            <span>L-V 06:00-23:00<br />S-D 08:00-20:00</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pie-inferior">
+      <p>© {{ anioActual }} Jimnasio. Todos los derechos reservados.</p>
+
+      <div class="pie-legal">
+        <a href="#">Aviso legal</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Cookies</a>
+        <button (click)="volverArriba()" class="pie-arriba" type="button">
+          Volver arriba
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+               viewBox="0 0 24 24">
+            <path d="M12 19V5M5 12l7-7 7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</footer>

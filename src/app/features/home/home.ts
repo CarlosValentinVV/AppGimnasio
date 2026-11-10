@@ -9,6 +9,7 @@ import {
   signal,
 } from '@angular/core';
 
+import { ThemeService } from '../../shared/services/theme.service';
 import homeData from './home.json';
 
 export interface GymClass {
@@ -77,8 +78,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     return this.data().classes.filter((c) => c.category === cat);
   });
 
-  readonly isDarkMode = signal<boolean>(false);
-  readonly mobileMenuOpen = signal(false);
+  private readonly themeService = inject(ThemeService);
+  readonly isDarkMode = this.themeService.isDarkMode;
   readonly selectedCategory = signal<'todas' | 'fuerza' | 'cardio' | 'mente'>('todas');
   readonly billingCycle = signal<'mensual' | 'anual'>('mensual');
   readonly openFaqIndex = signal<number | null>(0);
@@ -96,15 +97,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   toggleTheme(): void {
-    this.isDarkMode.update((dark) => !dark);
-  }
-
-  toggleMobileMenu(): void {
-    this.mobileMenuOpen.update((open) => !open);
-  }
-
-  closeMobileMenu(): void {
-    this.mobileMenuOpen.set(false);
+    this.themeService.toggle();
   }
 
   setCategory(category: 'todas' | 'fuerza' | 'cardio' | 'mente'): void {

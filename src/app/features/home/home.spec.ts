@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ThemeService } from '../../shared/services/theme.service';
 import { HomeComponent } from './home';
 
 describe('HomeComponent', () => {
@@ -9,6 +11,8 @@ describe('HomeComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HomeComponent],
     }).compileComponents();
+
+    TestBed.inject(ThemeService).setDarkMode(false);
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
@@ -32,14 +36,6 @@ describe('HomeComponent', () => {
     expect(component.selectedCategory()).toBe('fuerza');
     const filtered = component.filteredClasses();
     expect(filtered.every((c) => c.category === 'fuerza')).toBeTrue();
-  });
-
-  it('debe alternar el menú móvil', () => {
-    expect(component.mobileMenuOpen()).toBeFalse();
-    component.toggleMobileMenu();
-    expect(component.mobileMenuOpen()).toBeTrue();
-    component.closeMobileMenu();
-    expect(component.mobileMenuOpen()).toBeFalse();
   });
 
   it('debe alternar entre tema oscuro y claro', () => {

@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ThemeService } from '../../../shared/services/theme.service';
 import { PantallaUsuario } from './pantalla-usuario';
 
 describe('PantallaUsuario', () => {
@@ -9,6 +11,8 @@ describe('PantallaUsuario', () => {
     await TestBed.configureTestingModule({
       imports: [PantallaUsuario],
     }).compileComponents();
+
+    TestBed.inject(ThemeService).setDarkMode(false);
 
     fixture = TestBed.createComponent(PantallaUsuario);
     component = fixture.componentInstance;

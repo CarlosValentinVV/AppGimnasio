@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 
+import { ThemeService } from '../../../shared/services/theme.service';
 import { AnilloObjetivo } from '../components/anillo-objetivo/anillo-objetivo';
 import { EstadisticasPerfil } from '../components/estadisticas-perfil/estadisticas-perfil';
 import { GraficoAsistencia } from '../components/grafico-asistencia/grafico-asistencia';
@@ -44,7 +45,9 @@ import {
   },
 })
 export class PantallaUsuario {
-  readonly isDarkMode = signal<boolean>(false);
+  private readonly themeService = inject(ThemeService);
+
+  readonly isDarkMode = this.themeService.isDarkMode;
   readonly pestanaActiva = signal<Pestana>('resumen');
   readonly porcentajeNivel = computed(() => {
     const siguiente = this.usuario().puntosSiguienteNivel;
@@ -67,6 +70,6 @@ export class PantallaUsuario {
   }
 
   toggleTheme(): void {
-    this.isDarkMode.update((dark) => !dark);
+    this.themeService.toggle();
   }
 }
