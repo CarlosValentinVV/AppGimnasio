@@ -1,1 +1,178 @@
-<p>login works!</p>
+<!-- Pantalla de acceso: inicio de sesión y registro -->
+<main class="acceso">
+  <div class="acceso__tarjeta">
+
+    <!-- Vista de sesión iniciada -->
+    <section class="acceso__sesion" *ngIf="usuarioActivo; else formularios">
+      <h1 class="acceso__titulo">Hola, {{ usuarioActivo.nombre }}</h1>
+      <p class="acceso__texto">Has iniciado sesión con {{ usuarioActivo.email }}.</p>
+      <button type="button" class="acceso__boton" (click)="cerrarSesion()">Cerrar sesión</button>
+    </section>
+
+    <ng-template #formularios>
+      <!-- Pestañas para alternar entre login y registro -->
+      <div class="acceso__pestañas" role="tablist">
+        <button
+          type="button"
+          class="acceso__pestaña"
+          [class.acceso__pestaña--activa]="modo === 'login'"
+          (click)="cambiarModo('login')">
+          Iniciar sesión
+        </button>
+        <button
+          type="button"
+          class="acceso__pestaña"
+          [class.acceso__pestaña--activa]="modo === 'registro'"
+          (click)="cambiarModo('registro')">
+          Registrarse
+        </button>
+      </div>
+
+      <!-- Formulario de inicio de sesión -->
+      <form
+        class="acceso__formulario"
+        *ngIf="modo === 'login'"
+        [formGroup]="loginForm"
+        (ngSubmit)="iniciarSesion()"
+        novalidate>
+
+        <p class="acceso__mensaje" role="status" *ngIf="mensaje">{{ mensaje }}</p>
+
+        <label class="acceso__etiqueta" for="login-email">Correo electrónico</label>
+        <input
+          class="acceso__campo"
+          [class.acceso__campo--error]="loginInvalido('email')"
+          id="login-email"
+          type="email"
+          formControlName="email"
+          placeholder="tucorreo@ejemplo.com"
+          autocomplete="username">
+        <p class="acceso__error" role="alert" *ngIf="loginInvalido('email')">
+          Introduce un correo válido.
+        </p>
+
+        <label class="acceso__etiqueta" for="login-password">Contraseña</label>
+        <input
+          class="acceso__campo"
+          [class.acceso__campo--error]="loginInvalido('password')"
+          id="login-password"
+          type="password"
+          formControlName="password"
+          placeholder="••••••••"
+          autocomplete="current-password">
+        <p class="acceso__error" role="alert" *ngIf="loginInvalido('password')">
+          Escribe tu contraseña.
+        </p>
+
+        <a class="acceso__enlace-secundario" aria-disabled="true" tabindex="-1">¿Has olvidado tu contraseña?</a>
+
+        <p class="acceso__error acceso__error--general" role="alert" *ngIf="error">{{ error }}</p>
+
+        <button type="submit" class="acceso__boton" [disabled]="enviando">
+          {{ enviando ? 'Entrando…' : 'Entrar' }}
+        </button>
+      </form>
+
+      <!-- Formulario de registro -->
+      <form
+        class="acceso__formulario"
+        *ngIf="modo === 'registro'"
+        [formGroup]="registroForm"
+        (ngSubmit)="registrar()"
+        novalidate>
+
+        <label class="acceso__etiqueta" for="registro-nombre">Nombre completo</label>
+        <input
+          class="acceso__campo"
+          [class.acceso__campo--error]="invalido('nombre')"
+          id="registro-nombre"
+          type="text"
+          formControlName="nombre"
+          placeholder="Nombre y apellidos"
+          autocomplete="name">
+        <p class="acceso__error" role="alert" *ngIf="invalido('nombre')">
+          Escribe tu nombre (mínimo 3 caracteres).
+        </p>
+
+        <label class="acceso__etiqueta" for="registro-email">Correo electrónico</label>
+        <input
+          class="acceso__campo"
+          [class.acceso__campo--error]="invalido('email')"
+          id="registro-email"
+          type="email"
+          formControlName="email"
+          placeholder="tucorreo@ejemplo.com"
+          autocomplete="email">
+        <p class="acceso__error" role="alert" *ngIf="invalido('email')">
+          Introduce un correo válido, por ejemplo tucorreo@ejemplo.com.
+        </p>
+
+        <label class="acceso__etiqueta" for="registro-email-confirmar">Repite el correo electrónico</label>
+        <input
+          class="acceso__campo"
+          [class.acceso__campo--error]="invalido('confirmarEmail') || noCoinciden('emailsDistintos', 'confirmarEmail')"
+          id="registro-email-confirmar"
+          type="email"
+          formControlName="confirmarEmail"
+          placeholder="Repite tu correo"
+          autocomplete="off">
+        <p class="acceso__error" role="alert" *ngIf="invalido('confirmarEmail')">
+          Repite tu correo electrónico.
+        </p>
+        <p class="acceso__error" role="alert" *ngIf="noCoinciden('emailsDistintos', 'confirmarEmail')">
+          Los correos no coinciden.
+        </p>
+
+        <label class="acceso__etiqueta" for="registro-nacimiento">Fecha de nacimiento</label>
+        <input
+          class="acceso__campo"
+          [class.acceso__campo--error]="invalido('fechaNacimiento')"
+          id="registro-nacimiento"
+          type="date"
+          formControlName="fechaNacimiento"
+          [max]="hoy"
+          autocomplete="bday">
+        <p class="acceso__error" role="alert" *ngIf="invalido('fechaNacimiento')">
+          Indica una fecha de nacimiento válida (no puede ser futura).
+        </p>
+
+        <label class="acceso__etiqueta" for="registro-password">Contraseña</label>
+        <input
+          class="acceso__campo"
+          [class.acceso__campo--error]="invalido('password')"
+          id="registro-password"
+          type="password"
+          formControlName="password"
+          placeholder="••••••••"
+          autocomplete="new-password">
+        <p class="acceso__ayuda">Mínimo 8 caracteres.</p>
+        <p class="acceso__error" role="alert" *ngIf="invalido('password')">
+          La contraseña debe tener al menos 8 caracteres.
+        </p>
+
+        <label class="acceso__etiqueta" for="registro-password-confirmar">Repite la contraseña</label>
+        <input
+          class="acceso__campo"
+          [class.acceso__campo--error]="invalido('confirmarPassword') || noCoinciden('passwordsDistintas', 'confirmarPassword')"
+          id="registro-password-confirmar"
+          type="password"
+          formControlName="confirmarPassword"
+          placeholder="••••••••"
+          autocomplete="new-password">
+        <p class="acceso__error" role="alert" *ngIf="invalido('confirmarPassword')">
+          Repite tu contraseña.
+        </p>
+        <p class="acceso__error" role="alert" *ngIf="noCoinciden('passwordsDistintas', 'confirmarPassword')">
+          Las contraseñas no coinciden.
+        </p>
+
+        <p class="acceso__error acceso__error--general" role="alert" *ngIf="error">{{ error }}</p>
+
+        <button type="submit" class="acceso__boton" [disabled]="enviando">
+          {{ enviando ? 'Creando cuenta…' : 'Crear cuenta' }}
+        </button>
+      </form>
+    </ng-template>
+
+  </div>
+</main>

@@ -1,0 +1,154 @@
+.acceso {
+  --color-texto: #232620;
+  --color-texto-suave: #6d6f68;
+  --color-fondo: #ffffff;
+  --color-fondo-suave: #f6f8f6;
+  --color-borde: #e4e3df;
+  --color-acento: #3f5c4e;
+  --color-acento-suave: #eef1ee;
+  --color-error: #b3261e;
+
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: var(--color-texto);
+  display: flex;
+  justify-content: center;
+  padding: 56px 16px;
+  background-color: var(--color-fondo-suave);
+  min-height: 480px;
+}
+
+.acceso__tarjeta {
+  width: 100%;
+  max-width: 380px;
+  background-color: var(--color-fondo);
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.acceso__pestañas {
+  display: flex;
+  gap: 4px;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+.acceso__pestaña {
+  flex: 1;
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-texto-suave);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.acceso__pestaña--activa {
+  background-color: var(--color-acento-suave);
+  color: var(--color-acento);
+}
+
+.acceso__formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 20px 24px;
+}
+
+.acceso__etiqueta {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.acceso__campo {
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.acceso__campo:focus {
+  outline: none;
+  border-color: var(--color-acento);
+}
+
+.acceso__campo--error,
+.acceso__campo--error:focus {
+  border-color: var(--color-error);
+}
+
+.acceso__ayuda {
+  font-size: 12px;
+  color: var(--color-texto-suave);
+  margin: 0;
+}
+
+.acceso__error {
+  font-size: 12px;
+  color: var(--color-error);
+  margin: 0;
+}
+
+.acceso__mensaje {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-acento);
+  background-color: var(--color-acento-suave);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 0 0 8px;
+}
+
+.acceso__enlace-secundario {
+  font-size: 12px;
+  color: var(--color-texto-suave);
+  text-decoration: none;
+  margin-top: 6px;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.acceso__boton {
+  margin-top: 18px;
+  background-color: var(--color-acento);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.acceso__boton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.acceso__error--general {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.acceso__sesion {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 20px;
+}
+
+.acceso__titulo {
+  font-size: 18px;
+  margin: 0;
+}
+
+.acceso__texto {
+  font-size: 14px;
+  color: var(--color-texto-suave);
+  margin: 0;
+}
