@@ -58,7 +58,7 @@ Con el servidor arrancado:
 |---|---|---|
 | Inicio | http://localhost:4200/ | Logo **JIMNASIO** del header |
 | Perfil del cliente | http://localhost:4200/perfil | Botón **Mi perfil** del header |
-| Acceso (login / registro) | http://localhost:4200/login | Escribiendo la URL (aún no hay enlace en el header) |
+| Acceso (login / registro) | http://localhost:4200/login | Botón **Acceso** del header (en móvil, dentro del menú) |
 
 Los enlaces del header *Por qué elegirnos, Clases, Planes, Opiniones y Preguntas* llevan a cada sección de la página de inicio.
 

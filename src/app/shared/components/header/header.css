@@ -203,6 +203,7 @@ a {
   color: var(--accent-color, #2563eb);
 }
 
+.enlace-acceso,
 .enlace-perfil {
   padding-inline: 1rem;
 }
@@ -319,6 +320,7 @@ a {
     padding: 0.85rem 1rem;
   }
 
+  .enlace-acceso,
   .enlace-perfil {
     display: none;
   }
