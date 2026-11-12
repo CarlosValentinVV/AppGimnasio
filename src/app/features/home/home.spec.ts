@@ -24,7 +24,7 @@ describe('HomeComponent', () => {
   });
 
   it('debe iniciar con el modo claro como predeterminado (isDarkMode = false)', () => {
-    expect(component.isDarkMode()).toBeFalse();
+    expect(component.isDarkMode()).toBeFalsy();
   });
 
   it('debe iniciar con la categoría "todas"', () => {
@@ -35,14 +35,14 @@ describe('HomeComponent', () => {
     component.setCategory('fuerza');
     expect(component.selectedCategory()).toBe('fuerza');
     const filtered = component.filteredClasses();
-    expect(filtered.every((c) => c.category === 'fuerza')).toBeTrue();
+    expect(filtered.every((c) => c.category === 'fuerza')).toBeTruthy();
   });
 
   it('debe alternar entre tema oscuro y claro', () => {
-    expect(component.isDarkMode()).toBeFalse();
+    expect(component.isDarkMode()).toBeFalsy();
     component.toggleTheme();
-    expect(component.isDarkMode()).toBeTrue();
+    expect(component.isDarkMode()).toBeTruthy();
     component.toggleTheme();
-    expect(component.isDarkMode()).toBeFalse();
+    expect(component.isDarkMode()).toBeFalsy();
   });
 });

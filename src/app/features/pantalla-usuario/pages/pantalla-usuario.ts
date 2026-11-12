@@ -20,7 +20,7 @@ import {
   PantallaUsuarioData,
   Pestana,
   Usuario,
-  VisitaReciente,
+  VisitaReciente
 } from '../models/usuario.models';
 
 /**
@@ -61,17 +61,13 @@ export class PantallaUsuario {
 
   /** Pestaña actualmente activa: 'resumen', 'asistencia' o 'datos'. */
   readonly pestanaActiva = signal<Pestana>('resumen');
-  /** Datos del usuario logueado. */
-  readonly usuario = signal<Usuario>(this.datos.usuario);
 
   // Ajuste para importar JSON correctamente en entornos modernos
   private readonly datos: PantallaUsuarioData = datosPantalla as unknown as PantallaUsuarioData;
-  /** Porcentaje de progreso hacia el siguiente nivel. */
-  readonly porcentajeNivel = computed(() => {
-    const siguiente = this.usuario().puntosSiguienteNivel;
-    if (!siguiente) return 0;
-    return Math.round((this.usuario().puntosNivel / siguiente) * 100);
-  });
+
+  /** Datos del usuario logueado. */
+  readonly usuario = signal<Usuario>(this.datos.usuario);
+
   /** Estadísticas del perfil del usuario. */
   readonly estadisticas = signal<EstadisticaUsuario[]>(this.datos.estadisticas);
 
@@ -92,6 +88,13 @@ export class PantallaUsuario {
 
   /** Información de la membresía del usuario. */
   readonly membresia = signal<Membresia>(this.datos.membresia);
+
+  /** Porcentaje de progreso hacia el siguiente nivel. */
+  readonly porcentajeNivel = computed(() => {
+    const siguiente = this.usuario().puntosSiguienteNivel;
+    if (!siguiente) return 0;
+    return Math.round((this.usuario().puntosNivel / siguiente) * 100);
+  });
 
   /** Cambia a la pestaña indicada. */
   setPestana(pestana: Pestana): void {
