@@ -7,4 +7,5 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'perfil', component: PantallaUsuario },
   { path: 'login', component: Login },
+  { path: '**', component: HomeComponent },
 ];
