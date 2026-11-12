@@ -23,6 +23,15 @@ import {
   VisitaReciente,
 } from '../models/usuario.models';
 
+/**
+ * Pantalla de perfil del cliente (usuario).
+ * Muestra estadísticas, gráfico de asistencia, objetivo mensual, logros,
+ * visitas recientes, datos personales y membresía, organizados en pestañas
+ * (Resumen, Asistencia, Datos).
+ *
+ * @author Equipo Jimnasio
+ * @version 1.0
+ */
 @Component({
   selector: 'app-pantalla-usuario',
   standalone: true,
@@ -47,28 +56,49 @@ import {
 export class PantallaUsuario {
   private readonly themeService = inject(ThemeService);
 
+  /** Indica si el modo oscuro está activo. */
   readonly isDarkMode = this.themeService.isDarkMode;
+
+  /** Pestaña actualmente activa: 'resumen', 'asistencia' o 'datos'. */
   readonly pestanaActiva = signal<Pestana>('resumen');
+  /** Datos del usuario logueado. */
+  readonly usuario = signal<Usuario>(this.datos.usuario);
+
+  // Ajuste para importar JSON correctamente en entornos modernos
+  private readonly datos: PantallaUsuarioData = datosPantalla as unknown as PantallaUsuarioData;
+  /** Porcentaje de progreso hacia el siguiente nivel. */
   readonly porcentajeNivel = computed(() => {
     const siguiente = this.usuario().puntosSiguienteNivel;
     if (!siguiente) return 0;
     return Math.round((this.usuario().puntosNivel / siguiente) * 100);
   });
-  // Ajuste para importar JSON correctamente en entornos modernos
-  private readonly datos: PantallaUsuarioData = datosPantalla as unknown as PantallaUsuarioData;
-  readonly usuario = signal<Usuario>(this.datos.usuario);
+  /** Estadísticas del perfil del usuario. */
   readonly estadisticas = signal<EstadisticaUsuario[]>(this.datos.estadisticas);
+
+  /** Asistencias por día de la semana. */
   readonly asistenciasSemana = signal<AsistenciaDia[]>(this.datos.asistenciasSemana);
+
+  /** Objetivo mensual de visitas. */
   readonly objetivo = signal<ObjetivoMensual>(this.datos.objetivoMensual);
+
+  /** Visitas recientes del usuario. */
   readonly visitasRecientes = signal<VisitaReciente[]>(this.datos.visitasRecientes);
+
+  /** Logros obtenidos por el usuario. */
   readonly logros = signal<Logro[]>(this.datos.logros);
+
+  /** Datos personales del usuario. */
   readonly datosPersonales = signal<DatoPersonal[]>(this.datos.datosPersonales);
+
+  /** Información de la membresía del usuario. */
   readonly membresia = signal<Membresia>(this.datos.membresia);
 
+  /** Cambia a la pestaña indicada. */
   setPestana(pestana: Pestana): void {
     this.pestanaActiva.set(pestana);
   }
 
+  /** Alterna el modo claro/oscuro de la aplicación. */
   toggleTheme(): void {
     this.themeService.toggle();
   }

@@ -12,6 +12,9 @@ import {
 import { ThemeService } from '../../shared/services/theme.service';
 import homeData from './home.json';
 
+/**
+ * Datos de una clase de gimnasio.
+ */
 export interface GymClass {
   id: string;
   name: string;
@@ -23,11 +26,17 @@ export interface GymClass {
   tag: string;
 }
 
+/**
+ * Elemento de preguntas frecuentes.
+ */
 export interface FaqItem {
   question: string;
   answer: string;
 }
 
+/**
+ * Testimonio de un cliente del gimnasio.
+ */
 export interface Testimonial {
   name: string;
   role: string;
@@ -37,6 +46,9 @@ export interface Testimonial {
   rating: number;
 }
 
+/**
+ * Plan de membresía disponible.
+ */
 export interface Plan {
   name: string;
   sub: string;
@@ -47,6 +59,9 @@ export interface Plan {
   popular?: boolean;
 }
 
+/**
+ * Conjunto de datos de la página de inicio.
+ */
 export interface HomeData {
   stats: { label: string; value: string }[];
   features: { icon: string; title: string; description: string }[];
@@ -56,6 +71,14 @@ export interface HomeData {
   faqs: FaqItem[];
 }
 
+/**
+ * Componente principal de la página de inicio (home).
+ * Muestra estadísticas, características, clases filtradas por categoría,
+ * planes de membresía, testimonios y preguntas frecuentes.
+ *
+ * @author Equipo Jimnasio
+ * @version 1.0
+ */
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -70,6 +93,8 @@ export interface HomeData {
 export class HomeComponent implements AfterViewInit, OnDestroy {
   // Ajuste para importar JSON correctamente en entornos modernos
   readonly data = signal<HomeData>(homeData as unknown as HomeData);
+
+  /** Clases filtradas según la categoría seleccionada. */
   readonly filteredClasses = computed(() => {
     const cat = this.selectedCategory();
     if (cat === 'todas') {
@@ -96,19 +121,23 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  /** Alterna el modo claro/oscuro de la aplicación. */
   toggleTheme(): void {
     this.themeService.toggle();
   }
 
+  /** Cambia la categoría de clases filtradas. */
   setCategory(category: 'todas' | 'fuerza' | 'cardio' | 'mente'): void {
     this.selectedCategory.set(category);
     this.refreshObserver();
   }
 
+  /** Cambia el ciclo de facturación (mensual/anual). */
   setBillingCycle(cycle: 'mensual' | 'anual'): void {
     this.billingCycle.set(cycle);
   }
 
+  /** Alterna la pregunta frecuente abierta en el índice dado. */
   toggleFaq(index: number): void {
     this.openFaqIndex.update((current) => (current === index ? null : index));
   }

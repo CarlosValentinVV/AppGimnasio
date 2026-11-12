@@ -128,3 +128,92 @@ public/                        # Recursos estáticos (favicon, logos) servidos d
 - **Componentes:** `PantallaUsuario`, `Login`
 - **Archivos:** `pantalla-usuario.ts`, `login.html`
 - **Variables:** `usuarioActivo`, `pestanaActiva`
+
+## Documentación de componentes
+
+Cada archivo `.ts` de componente incluye un bloque JSDoc con descripción, autor y versión:
+
+```ts
+/**
+ * Componente principal de la página de inicio.
+ * Muestra estadísticas, características, clases filtradas por categoría,
+ * planes de membresía, testimonios y preguntas frecuentes.
+ *
+ * @author Equipo Jimnasio
+ * @version 1.0
+ */
+```
+
+Cada plantilla `.html` incluye comentarios HTML que describen el propósito de cada sección:
+
+```html
+<!-- Sección hero: presentación principal del gimnasio -->
+<section class="hero">
+  ...
+</section>
+```
+
+## Página de inicio (Home)
+
+Ubicación: `src/app/features/home/home.ts`
+
+La página de inicio presenta el gimnasio y está organizada en secciones:
+
+1. **Hero:** titular principal, llamada a la acción y tarjeta visual.
+2. **Estadísticas:** métricas clave del gimnasio.
+3. **Características:** tarjetas con iconos que describen los servicios.
+4. **Clases:** listado filtrado por categoría (fuerza, cardio, mente).
+5. **Planes:** membresías con facturación mensual o anual.
+6. **Testimonios:** opiniones de clientes con valoración por estrellas.
+7. **Preguntas frecuentes:** acordeón desplegable por pregunta.
+8. **CTA final:** banner con datos de contacto y botón de prueba gratuita.
+
+### Programación reactiva
+
+- `signal` para el estado (categoría seleccionada, ciclo de facturación, FAQ abierto).
+- `computed` para las clases filtradas según la categoría.
+- `inject(ThemeService)` para el modo claro/oscuro.
+- `inject(ElementRef)` + `IntersectionObserver` para animaciones de revelado al hacer scroll.
+- `ChangeDetectionStrategy.OnPush` para rendimiento.
+
+## Pantalla de usuario (Perfil)
+
+Ubicación: `src/app/features/pantalla-usuario/pages/pantalla-usuario.ts`
+
+La pantalla de perfil del cliente permite consultar su actividad en el gimnasio, organizada en tres pestañas:
+
+1. **Resumen:** estadísticas, visitas recientes y logros obtenidos.
+2. **Asistencia:** gráfico de asistencia semanal y anillo de progreso del objetivo mensual.
+3. **Datos personales:** datos de contacto y tarjeta de membresía.
+
+### Componentes hijos
+
+- `app-perfil-cabecera`: foto, nombre, nivel y porcentaje de objetivo.
+- `app-estadisticas-perfil`: tarjetas con métricas del usuario.
+- `app-lista-visitas`: historial de visitas recientes.
+- `app-lista-logros`: logros conseguidos con contador.
+- `app-grafico-asistencia`: gráfico de barras de asistencia semanal.
+- `app-anillo-objetivo`: indicador circular de progreso mensual.
+- `app-lista-datos`: lista de datos personales con iconos.
+- `app-tarjeta-membresia`: información del plan y estado de la cuota.
+
+### Programación reactiva
+
+- `signal` para cada fuente de datos (usuario, estadísticas, asistencias, objetivo, visitas, logros, datos personales, membresía).
+- `computed` para el porcentaje de nivel (`porcentajeNivel`).
+- `inject(ThemeService)` para el modo claro/oscuro.
+- `ChangeDetectionStrategy.OnPush` para rendimiento.
+
+## Formas de programación utilizadas
+
+El proyecto sigue los patrones definidos en la documentación de componentes:
+
+- **Componentes standalone** (`standalone: true`) sin NgModules.
+- **Signals** (`signal`, `computed`) para estado reactivo.
+- **Inyección de dependencias** con `inject()` en lugar de constructores.
+- **`ChangeDetectionStrategy.OnPush`** en todos los componentes.
+- **Sintaxis de control de flujo** de Angular 17+ (`@if`, `@for`, `@switch`).
+- **Entradas y salidas** con `input()` y `output()` en componentes hijos.
+- **Nomenclatura de archivos** sin el sufijo `.component` (ej. `home.ts`, no `home.component.ts`).
+- **Documentación JSDoc** en clases y métodos públicos.
+- **Comentarios HTML** descriptivos en cada sección de las plantillas.
