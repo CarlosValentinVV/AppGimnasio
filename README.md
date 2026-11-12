@@ -79,13 +79,51 @@ Compilación de desarrollo (genera la app en `dist/AppGimnasio`):
 npm run build -- --configuration development
 ```
 
-Compilación de producción:
+Compilación de producción (es la que se publica en GitHub Pages):
 ```bash
 npm run build
 ```
-> **Aviso:** ahora mismo la compilación de producción falla por el límite de tamaño (`budgets`) de `angular.json`,
-> porque las fuentes de Google Fonts que se insertan en línea superan los 8 kB permitidos. La compilación de
-> desarrollo y `npm start` funcionan con normalidad.
+
+El resultado queda en `dist/AppGimnasio/browser`. La configuración de producción ya incluye
+`baseHref: "/AppGimnasio/"` en `angular.json`, necesario para servir la app desde una subcarpeta.
+
+Compilación preparada para GitHub Pages (compila y genera `404.html`):
+
+```bash
+npm run build:pages
+```
+
+### Ver la compilación en local
+
+Para comprobar exactamente lo que se publica:
+
+```bash
+npx http-server dist/AppGimnasio/browser -o http://localhost:8080/AppGimnasio/
+```
+
+## Despliegue en GitHub Pages
+
+El repositorio incluye el flujo de trabajo [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml),
+que compila la app y la publica automáticamente en cada `push` a la rama `main` (también se puede lanzar a mano
+desde la pestaña **Actions** con *Run workflow*).
+
+**Configuración inicial (solo una vez):**
+
+1. Entra en el repositorio en GitHub → **Settings** → **Pages**.
+2. En **Build and deployment** elige **Source: GitHub Actions**.
+3. Haz `git push` a `main` y espera a que termine el workflow *Deploy a GitHub Pages*.
+
+La web quedará publicada en:
+
+**https://carlosvalentinvv.github.io/AppGimnasio/**
+
+Notas sobre la configuración:
+
+- El workflow pasa `--base-href "/<nombre-del-repositorio>/"`, así que si renombras el repositorio no hay que tocar nada.
+- `public/.nojekyll` evita que GitHub Pages procese los archivos con Jekyll.
+- `scripts/postbuild-pages.mjs` copia `index.html` como `404.html`. GitHub Pages sirve ese archivo para cualquier
+  ruta inexistente, así que enlaces como `/AppGimnasio/perfil` o `/AppGimnasio/login` cargan la aplicación (rutas de Angular) en lugar de dar un 404, incluso al recargar o compartir el enlace.
+- Los datos del login se guardan en el navegador; GitHub Pages sirve por HTTPS, así que el cifrado funciona.
 
 ## Pruebas unitarias
 Ejecutar todas las pruebas:
@@ -122,6 +160,8 @@ src/
         ├── components/        # header y footer globales
         └── services/          # ThemeService (modo claro / oscuro)
 public/                        # Recursos estáticos (favicon, logos) servidos desde la raíz
+scripts/                       # Tareas de compilación (copia de 404.html para GitHub Pages)
+.github/workflows/             # Despliegue automático en GitHub Pages
 ```
 
 ## Nomenclatura
