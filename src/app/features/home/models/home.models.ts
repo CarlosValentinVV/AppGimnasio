@@ -75,7 +75,7 @@ export interface FaqItem {
 /**
  * Testimonio de un cliente del gimnasio.
  */
-export interface Testimonial {
+export interface opinions {
   /** Nombre del socio. */
   name: string;
   /** Antigüedad o rol del socio. */
@@ -123,7 +123,7 @@ export interface HomeData {
   /** Planes de membresía. */
   plans: Plan[];
   /** Opiniones de los socios. */
-  testimonials: Testimonial[];
+  opinions: opinions[];
   /** Preguntas frecuentes. */
   faqs: FaqItem[];
 }

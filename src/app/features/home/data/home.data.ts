@@ -162,7 +162,7 @@ export const HOME_DATA: HomeData = {
     },
   ],
   // Opiniones de socios que refuerzan la confianza en el gimnasio.
-  testimonials: [
+  opinions: [
     {
       name: 'Marcos Alonso',
       role: 'Socio desde 2023',

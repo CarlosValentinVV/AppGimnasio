@@ -258,7 +258,7 @@
       </div>
 
       <div class="grid-testimonios">
-        @for (t of data().testimonials; track t.name; let idx = $index) {
+        @for (t of data().opinions; track t.name; let idx = $index) {
           <div [class]="'delay-' + (idx + 1)" class="tarjeta-testimonio reveal reveal-up">
             <div class="testimonio-estrellas">
               @for (star of [1, 2, 3, 4, 5]; track star) {
