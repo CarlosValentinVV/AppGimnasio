@@ -104,14 +104,14 @@ npx http-server dist/AppGimnasio/browser -o http://localhost:8080/AppGimnasio/
 ## Despliegue en GitHub Pages
 
 El repositorio incluye el flujo de trabajo [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml),
-que compila la app y la publica automáticamente en cada `push` a la rama `main` (también se puede lanzar a mano
-desde la pestaña **Actions** con *Run workflow*).
+que compila la app y la publica automáticamente en cada `push` a la rama principal (`master`, o `main` si la renombras;
+también se puede lanzar a mano desde la pestaña **Actions** con *Run workflow*).
 
 **Configuración inicial (solo una vez):**
 
 1. Entra en el repositorio en GitHub → **Settings** → **Pages**.
 2. En **Build and deployment** elige **Source: GitHub Actions**.
-3. Haz `git push` a `main` y espera a que termine el workflow *Deploy a GitHub Pages*.
+3. Haz `git push` a `master` y espera a que termine el workflow *Deploy a GitHub Pages*.
 
 La web quedará publicada en:
 
