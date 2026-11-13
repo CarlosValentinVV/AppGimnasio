@@ -76,10 +76,10 @@ export class PantallaUsuario {
     return Math.round((this.usuario().puntosNivel / siguiente) * 100);
   });
 
-  /** Indica si el modo oscuro está activo. */
-  readonly isDarkMode = this.themeService.isDarkMode;
   /** Servicio compartido que controla el tema claro/oscuro. */
   private readonly themeService = inject(ThemeService);
+  /** Indica si el modo oscuro está activo. */
+  readonly isDarkMode = this.themeService.isDarkMode;
   /** Datos estáticos de la pantalla de perfil. */
   private readonly datos: PantallaUsuarioData = DATOS_PANTALLA_USUARIO;
   /** Datos del usuario que ha iniciado sesión. */
