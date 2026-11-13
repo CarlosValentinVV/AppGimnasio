@@ -21,6 +21,7 @@ con el seguimiento de su actividad y una pantalla de acceso con inicio de sesió
 - **Routing:** Angular Router
 - **Formularios:** Angular Reactive Forms
 - **Pruebas unitarias:** Vitest + jsdom (`@angular/build:unit-test`)
+- **Formato de código:** EditorConfig (`.editorconfig`) — sin Prettier ni ESLint
 
 ## Instalación y/o configuración
 
@@ -97,6 +98,31 @@ Ejecutar solo las de un componente (por ejemplo, el login) y salir al terminar:
 npm test -- --include=src/app/features/login/login.spec.ts --watch=false
 ```
 Sin `--watch=false` las pruebas se quedan vigilando cambios; pulsa `q` para salir.
+
+## Formato de código
+
+El proyecto **no usa Prettier ni ESLint**. El formato se gobierna con `.editorconfig`, que es la única
+fuente de verdad:
+
+| Regla                  | Valor       |
+|------------------------|-------------|
+| Sangría                | 2 espacios  |
+| Fin de línea           | LF (`\n`)   |
+| Salto de línea final   | Sí          |
+| Espacios finales       | Se eliminan |
+| Comillas en TypeScript | Simples     |
+
+Además, `.gitattributes` fuerza `eol=lf` para que el repositorio y el *working tree* usen siempre LF
+y no aparezcan archivos modificados por culpa de los finales de línea.
+
+**WebStorm / IntelliJ**
+
+1. `Settings → Languages & Frameworks → EditorConfig` → habilitar el plugin.
+2. `Settings → Editor → Code Style` → elegir el perfil **EditorConfig** en TypeScript, CSS y HTML.
+
+**Visual Studio Code**
+
+- `.vscode/settings.json` ya activa `editor.formatOnSave` con los formateadores nativos (TypeScript, HTML, CSS y JSON). VS Code lee `.editorconfig` de forma nativa, sin extensiones.
 
 ## Estructura del proyecto
 ```
