@@ -83,7 +83,6 @@ Compilación de producción:
 ```bash
 npm run build
 ```
-
 > **Aviso:** ahora mismo la compilación de producción falla por el límite de tamaño (`budgets`) de `angular.json`,
 > porque las fuentes de Google Fonts que se insertan en línea superan los 8 kB permitidos. La compilación de
 > desarrollo y `npm start` funcionan con normalidad.
