@@ -8,7 +8,7 @@ import { Usuario } from '../../models/usuario.models';
  * Muestra el avatar, los datos principales, el progreso de nivel y los
  * botones para cambiar de tema o editar el perfil.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaria
  * @version 1.0
  */
 @Component({

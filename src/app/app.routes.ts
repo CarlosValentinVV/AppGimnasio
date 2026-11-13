@@ -12,7 +12,7 @@ import { PantallaUsuario } from './features/pantalla-usuario/pages/pantalla-usua
  * - `/login` muestra el acceso y el registro.
  * - Cualquier ruta desconocida redirige a la página de inicio.
  *
- * @author raulmoron
+ * @author Todo el equipo
  * @version 1.0
  */
 export const routes: Routes = [

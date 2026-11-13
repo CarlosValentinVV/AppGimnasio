@@ -8,7 +8,7 @@ import { Logro } from '../../models/usuario.models';
  * Distingue los logros conseguidos de los pendientes y cuenta cuántos se han
  * desbloqueado.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaria
  * @version 1.0
  */
 @Component({

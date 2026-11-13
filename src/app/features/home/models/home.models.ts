@@ -4,7 +4,7 @@
  * Centralizan la forma de los datos que consume `HomeComponent`, de modo que
  * los datos estáticos y las plantillas compartan un único contrato tipado.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaria
  * @version 1.0
  */
 

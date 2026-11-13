@@ -31,7 +31,7 @@ type CicloFacturacion = 'mensual' | 'anual';
  * socios y las preguntas frecuentes. También gestiona el tema claro/oscuro y
  * las animaciones de aparición al hacer scroll.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaria
  * @version 1.0
  */
 @Component({

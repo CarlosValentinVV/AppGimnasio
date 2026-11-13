@@ -7,7 +7,7 @@ import { EstadisticaUsuario } from '../../models/usuario.models';
  *
  * Recibe una lista de métricas ya calculadas y las presenta visualmente.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaria
  * @version 1.0
  */
 @Component({

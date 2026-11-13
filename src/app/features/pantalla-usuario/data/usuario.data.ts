@@ -7,7 +7,7 @@ import type { PantallaUsuarioData } from '../models/usuario.models';
  * valide su estructura contra {@link PantallaUsuarioData} y para poder
  * importarlos con tipado estricto sin depender de `resolveJsonModule`.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaria
  * @version 1.0
  */
 export const DATOS_PANTALLA_USUARIO: PantallaUsuarioData = {

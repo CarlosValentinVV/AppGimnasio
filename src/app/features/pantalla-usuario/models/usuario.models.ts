@@ -3,7 +3,7 @@
  *
  * Definen el contrato que consumen `PantallaUsuario` y sus componentes hijos.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaria
  * @version 1.0
  */
 

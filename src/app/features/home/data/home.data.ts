@@ -7,7 +7,7 @@ import type { HomeData } from '../models/home.models';
  * compilador valide la estructura contra {@link HomeData} y para poder
  * importarlos con tipado estricto sin depender de `resolveJsonModule`.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaria
  * @version 1.0
  */
 export const HOME_DATA: HomeData = {

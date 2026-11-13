@@ -30,7 +30,7 @@ import type {
  * logros, las visitas recientes, los datos personales y la membresía,
  * organizados en tres pestañas: Resumen, Asistencia y Datos.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaría
  * @version 1.0
  */
 @Component({

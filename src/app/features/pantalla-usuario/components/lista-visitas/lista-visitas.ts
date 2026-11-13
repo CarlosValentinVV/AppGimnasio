@@ -7,7 +7,7 @@ import { VisitaReciente } from '../../models/usuario.models';
  *
  * Presenta cada visita con su fecha, hora y actividad realizada.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaria
  * @version 1.0
  */
 @Component({

@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
  * Dibuja un círculo SVG cuyo arco relleno representa el porcentaje de días
  * asistidos respecto a la meta del mes.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaria
  * @version 1.0
  */
 @Component({

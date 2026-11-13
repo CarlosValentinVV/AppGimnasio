@@ -7,7 +7,7 @@ import { DatoPersonal } from '../../models/usuario.models';
  *
  * Muestra cada dato con su etiqueta y valor en formato de lista de definición.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaria
  * @version 1.0
  */
 @Component({

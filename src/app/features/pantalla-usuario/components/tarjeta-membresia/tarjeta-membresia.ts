@@ -8,7 +8,7 @@ import { Membresia } from '../../models/usuario.models';
  * Muestra el plan contratado, la antigüedad como miembro y el estado de la
  * membresía, con una acción para gestionarla.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaria
  * @version 1.0
  */
 @Component({

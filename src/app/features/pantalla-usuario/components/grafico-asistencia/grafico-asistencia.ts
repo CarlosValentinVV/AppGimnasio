@@ -8,7 +8,7 @@ import { AsistenciaDia } from '../../models/usuario.models';
  * Calcula el máximo de visitas para escalar las barras y el total de visitas
  * del periodo mostrado.
  *
- * @author raulmoron
+ * @author Carlos Valentin Santamaria
  * @version 1.0
  */
 @Component({
