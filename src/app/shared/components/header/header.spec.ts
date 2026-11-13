@@ -31,21 +31,21 @@ describe('Header', () => {
   });
 
   it('debe alternar el menú móvil', () => {
-    expect(component.mobileMenuOpen()).toBe(false);
+    expect(component.mobileMenuOpen()).toBeFalse();
     component.toggleMobileMenu();
-    expect(component.mobileMenuOpen()).toBe(true);
+    expect(component.mobileMenuOpen()).toBeTrue();
     component.closeMobileMenu();
-    expect(component.mobileMenuOpen()).toBe(false);
+    expect(component.mobileMenuOpen()).toBeFalse();
   });
 
   it('debe alternar el tema compartido', () => {
     const themeService = TestBed.inject(ThemeService);
     themeService.setDarkMode(false);
 
-    expect(component.isDarkMode()).toBe(false);
+    expect(component.isDarkMode()).toBeFalse();
     component.toggleTheme();
-    expect(component.isDarkMode()).toBe(true);
+    expect(component.isDarkMode()).toBeTrue();
     component.toggleTheme();
-    expect(component.isDarkMode()).toBe(false);
+    expect(component.isDarkMode()).toBeFalse();
   });
 });
