@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Login } from './login';
 
+/** Pruebas unitarias del componente de acceso: estado, alternancia de pestañas y DOM. */
 describe('Login Component (Pruebas Unitarias)', () => {
   let component: Login;
   let fixture: ComponentFixture<Login>;
