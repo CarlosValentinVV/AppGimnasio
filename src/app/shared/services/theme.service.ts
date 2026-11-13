@@ -6,7 +6,7 @@ import { Injectable, signal } from '@angular/core';
  * Al vivir en la raíz, el header, el footer y las páginas comparten el mismo
  * modo claro/oscuro sin duplicar señales en cada componente.
  *
- * @author raulmoron
+ * @author Izan García
  * @version 1.0
  */
 @Injectable({ providedIn: 'root' })
