@@ -1,15 +1,14 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { Usuario } from '../../models/usuario.models';
 
 /**
  * Cabecera del perfil del usuario.
  *
- * Muestra el avatar, los datos principales, el progreso de nivel y los
- * botones para cambiar de tema o editar el perfil.
+ * Muestra el avatar, los datos principales y el progreso de nivel.
  *
  * @author Carlos Valentin Santamaria
- * @version 1.0
+ * @version 1.1
  */
 @Component({
   // Selector usado en la plantilla del perfil.
@@ -26,13 +25,6 @@ import { Usuario } from '../../models/usuario.models';
 export class PerfilCabecera {
   /** Datos del usuario que se muestran en la cabecera. */
   readonly usuario = input.required<Usuario>();
-  /** Indica si el modo oscuro está activo. */
-  readonly modoOscuro = input.required<boolean>();
   /** Porcentaje de progreso hacia el siguiente nivel. */
   readonly porcentajeNivel = input.required<number>();
-
-  /** Se emite al pulsar el botón de cambio de tema. */
-  readonly cambiarTema = output<void>();
-  /** Se emite al pulsar el botón de edición del perfil. */
-  readonly editar = output<void>();
 }
