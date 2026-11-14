@@ -1,0 +1,7 @@
+# Normaliza los finales de línea a LF en el repositorio y en el working tree.
+# Evita tener archivos mixtos (CRLF/LF) entre Commit y clones en distintos sistemas.
+* text=auto eol=lf
+
+# Archivos binarios: no aplicar conversiones de fin de línea.
+*.ico binary
+*.png binary

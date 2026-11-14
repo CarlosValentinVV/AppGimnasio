@@ -3,14 +3,10 @@
   <div class="perfil-brillo perfil-brillo-2"></div>
 
   <div class="contenedor-perfil">
-    <app-perfil-cabecera
-      (cambiarTema)="toggleTheme()"
-      [modoOscuro]="isDarkMode()"
-      [porcentajeNivel]="porcentajeNivel()"
-      [usuario]="usuario()"
-    />
+    <!-- Cabecera del perfil: foto, nombre, nivel y porcentaje de objetivo -->
+    <app-perfil-cabecera [porcentajeNivel]="porcentajeNivel()" [usuario]="usuario()" />
 
-    <!-- Navegación por pestañas -->
+    <!-- Navegación por pestañas: Resumen, Asistencia, Datos personales -->
     <nav aria-label="Secciones del perfil" class="tabs">
       <button (click)="setPestana('resumen')" [class.activo]="pestanaActiva() === 'resumen'" class="tab"
               type="button">
@@ -26,7 +22,7 @@
       </button>
     </nav>
 
-    <!-- Pestaña: Resumen -->
+    <!-- Pestaña: Resumen (estadísticas, visitas recientes y logros) -->
     @if (pestanaActiva() === 'resumen') {
       <app-estadisticas-perfil [estadisticas]="estadisticas()" />
 
@@ -36,7 +32,7 @@
       </div>
     }
 
-    <!-- Pestaña: Asistencia -->
+    <!-- Pestaña: Asistencia (gráfico semanal y anillo de objetivo mensual) -->
     @if (pestanaActiva() === 'asistencia') {
       <div class="grid-dos-columnas">
         <app-grafico-asistencia [asistencias]="asistenciasSemana()" />
@@ -44,7 +40,7 @@
       </div>
     }
 
-    <!-- Pestaña: Datos personales -->
+    <!-- Pestaña: Datos personales (datos de contacto y tarjeta de membresía) -->
     @if (pestanaActiva() === 'datos') {
       <div class="grid-dos-columnas">
         <app-lista-datos [datos]="datosPersonales()" />
