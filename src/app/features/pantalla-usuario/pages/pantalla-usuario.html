@@ -3,13 +3,8 @@
   <div class="perfil-brillo perfil-brillo-2"></div>
 
   <div class="contenedor-perfil">
-    <!-- Cabecera del perfil: foto, nombre, nivel, porcentaje de objetivo y botón de tema -->
-    <app-perfil-cabecera
-      (cambiarTema)="toggleTheme()"
-      [modoOscuro]="isDarkMode()"
-      [porcentajeNivel]="porcentajeNivel()"
-      [usuario]="usuario()"
-    />
+    <!-- Cabecera del perfil: foto, nombre, nivel y porcentaje de objetivo -->
+    <app-perfil-cabecera [porcentajeNivel]="porcentajeNivel()" [usuario]="usuario()" />
 
     <!-- Navegación por pestañas: Resumen, Asistencia, Datos personales -->
     <nav aria-label="Secciones del perfil" class="tabs">

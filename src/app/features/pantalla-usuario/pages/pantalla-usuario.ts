@@ -108,12 +108,4 @@ export class PantallaUsuario {
     // Actualiza la pestaña activa.
     this.pestanaActiva.set(pestana);
   }
-
-  /**
-   * Alterna el modo claro/oscuro de la aplicación.
-   */
-  toggleTheme(): void {
-    // Delega el cambio en el servicio compartido.
-    this.themeService.toggle();
-  }
 }
