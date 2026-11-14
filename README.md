@@ -6,7 +6,8 @@ Incluye la página pública del gimnasio (clases, planes, opiniones y preguntas 
 con el seguimiento de su actividad y una pantalla de acceso con inicio de sesión y registro.
 
 ## Características Principales
-1. **Página de inicio** (`/`): presentación del gimnasio, filtro de clases por categoría (fuerza, cardio, mente),
+
+1. **Página de inicio** (`/home`, la raíz `/` redirige aquí): presentación del gimnasio, filtro de clases por categoría (fuerza, cardio, mente),
    planes con precio mensual/anual, opiniones de clientes y preguntas frecuentes.
 2. **Perfil del cliente** (`/perfil`): resumen de estadísticas, gráfico de asistencia, objetivo mensual, logros,
    visitas recientes, datos personales y membresía, organizado en pestañas (Resumen, Asistencia, Datos).
@@ -55,13 +56,15 @@ La aplicación se recarga sola al guardar cambios. Para pararla, pulsa `Ctrl + C
 ## Cómo acceder a cada pantalla
 Con el servidor arrancado:
 
-| Pantalla | URL | Cómo llegar desde la web |
-|---|---|---|
-| Inicio | http://localhost:4200/ | Logo **JIMNASIO** del header |
-| Perfil del cliente | http://localhost:4200/perfil | Botón **Mi perfil** del header |
-| Acceso (login / registro) | http://localhost:4200/login | Botón **Acceso** del header (en móvil, dentro del menú) |
+| Pantalla                  | URL                          | Cómo llegar desde la web                                      |
+|---------------------------|------------------------------|---------------------------------------------------------------|
+| Inicio                    | http://localhost:4200/home   | Logo **JIMNASIO** del header (la raíz `/` redirige a `/home`) |
+| Perfil del cliente        | http://localhost:4200/perfil | Botón **Mi perfil** del header                                |
+| Acceso (login / registro) | http://localhost:4200/login  | Botón **Acceso** del header (en móvil, dentro del menú)       |
 
 Los enlaces del header *Por qué elegirnos, Clases, Planes, Opiniones y Preguntas* llevan a cada sección de la página de inicio.
+
+La ruta raíz `/` y cualquier URL desconocida redirigen a `/home`.
 
 ### Uso del login
 1. Entra en `/login` y abre la pestaña **Registrarse**.
@@ -75,7 +78,8 @@ Los enlaces del header *Por qué elegirnos, Clases, Planes, Opiniones y Pregunta
 > El cifrado necesita abrir la app desde `localhost` o HTTPS.
 
 ## Compilación
-Compilación de desarrollo (genera la app en `dist/AppGimnasio`):
+
+Compilación de desarrollo (genera la app en `dist/AppGimnasio/browser`):
 ```bash
 npm run build -- --configuration development
 ```
@@ -133,17 +137,17 @@ src/
 └── app/
     ├── app.ts / app.html      # Componente raíz: header + <router-outlet> + footer
     ├── app.config.ts          # Configuración global (router, scroll a anclas)
-    ├── app.routes.ts          # Rutas: '', 'perfil', 'login'
+    ├── app.routes.ts          # Rutas: '', 'home', 'perfil', 'login', '**'
     ├── core/
     │   └── auth/              # Autenticación: modelo, implementación con localStorage y token de inyección
     ├── features/              # Pantallas
-    │   ├── home/              # Página de inicio (datos en home.json)
+    │   ├── home/              # Página de inicio (datos en home.data.ts)
     │   ├── login/             # Inicio de sesión y registro
     │   └── pantalla-usuario/  # Perfil del cliente
     │       ├── pages/         # Componente de página
     │       ├── components/    # Componentes de la pantalla (anillo, gráfico, listas, tarjetas...)
     │       ├── models/        # Interfaces de datos
-    │       └── data/          # usuario.json con los datos de ejemplo
+    │       └── data/          # usuario.data.ts con los datos de ejemplo
     └── shared/
         ├── components/        # header y footer globales
         └── services/          # ThemeService (modo claro / oscuro)
@@ -170,7 +174,7 @@ Cada archivo `.ts` de componente incluye un bloque JSDoc con descripción, autor
  */
 ```
 
-Cada plantilla `.html` incluye comentarios HTML que describen el propósito de cada sección:
+Las plantillas incluyen comentarios HTML que describen las secciones principales:
 
 ```html
 <!-- Sección hero: presentación principal del gimnasio -->
@@ -237,9 +241,9 @@ El proyecto sigue los patrones definidos en la documentación de componentes:
 - **Componentes standalone** (`standalone: true`) sin NgModules.
 - **Signals** (`signal`, `computed`) para estado reactivo.
 - **Inyección de dependencias** con `inject()` en lugar de constructores.
-- **`ChangeDetectionStrategy.OnPush`** en todos los componentes.
+- **`ChangeDetectionStrategy.OnPush`** en las páginas y componentes compartidos (el componente raíz `App` usa la estrategia por defecto).
 - **Sintaxis de control de flujo** de Angular 17+ (`@if`, `@for`, `@switch`).
-- **Entradas y salidas** con `input()` y `output()` en componentes hijos.
+- **Entradas** con `input()` en los componentes hijos.
 - **Nomenclatura de archivos** sin el sufijo `.component` (ej. `home.ts`, no `home.component.ts`).
 - **Documentación JSDoc** en clases y métodos públicos.
 - **Comentarios HTML** descriptivos en cada sección de las plantillas.
