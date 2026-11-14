@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { Membresia } from '../../models/usuario.models';
 
@@ -6,10 +6,10 @@ import { Membresia } from '../../models/usuario.models';
  * Tarjeta de la membresía activa del usuario.
  *
  * Muestra el plan contratado, la antigüedad como miembro y el estado de la
- * membresía, con una acción para gestionarla.
+ * membresía.
  *
  * @author Carlos Valentin Santamaria
- * @version 1.0
+ * @version 1.1
  */
 @Component({
   // Selector usado en la plantilla del perfil.
@@ -30,7 +30,4 @@ export class TarjetaMembresia {
   readonly miembroDesde = input.required<string>();
   /** Detalles de la membresía activa. */
   readonly membresia = input.required<Membresia>();
-
-  /** Se emite al pulsar el botón de gestión de la membresía. */
-  readonly gestionar = output<void>();
 }
