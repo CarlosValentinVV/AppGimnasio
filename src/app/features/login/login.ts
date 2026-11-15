@@ -55,7 +55,7 @@ function coinciden(
  * Permite alternar entre inicio de sesión y registro, valida los formularios
  * y delega el almacenamiento en el servicio inyectado con AUTENTICACION.
  *
- * @author raulmoron
+ * @author Raúl Morón Chantal
  * @version 1.0
  */
 @Component({

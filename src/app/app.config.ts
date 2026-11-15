@@ -9,7 +9,7 @@ import { routes } from './app.routes';
  * Registra el router, la restauración de la posición de scroll y los
  * escuchadores globales de errores del navegador.
  *
- * @author raulmoron
+ * @author Todo el equipo
  * @version 1.0
  */
 export const appConfig: ApplicationConfig = {

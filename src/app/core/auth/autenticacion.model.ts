@@ -4,7 +4,7 @@
  * Define los datos que intercambian los formularios y el servicio, además del
  * error tipado que se muestra al usuario.
  *
- * @author raulmoron
+ * @author Raúl Morón Chantal
  * @version 1.0
  */
 
@@ -63,7 +63,7 @@ export type CodigoErrorAutenticacion =
 /**
  * Error de autenticación con un mensaje pensado para mostrarse en pantalla.
  *
- * @author raulmoron
+ * @author Raúl Morón Chantal
  * @version 1.0
  */
 export class ErrorAutenticacion extends Error {
