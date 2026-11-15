@@ -230,17 +230,6 @@
   font-weight: 700;
 }
 
-.acceso__mensaje {
-  margin: 0 0 0.25rem;
-  padding: 0.65rem 0.85rem;
-  background: var(--accent-suave);
-  border: 1px solid var(--border-highlight);
-  border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--accent-color);
-}
-
 .acceso__enlace-secundario {
   align-self: flex-start;
   margin-top: 0.5rem;
@@ -284,7 +273,17 @@
   transform: none;
 }
 
-/* ---------- Vista de sesión ---------- */
+.acceso__boton--secundario {
+  background-color: transparent;
+  color: var(--color-acento);
+  border: 1px solid var(--color-borde);
+}
+
+.acceso__error--general {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 10px;
+}
 
 .acceso__sesion {
   display: flex;
@@ -297,6 +296,19 @@
 
 .acceso__sesion .acceso__boton {
   width: 100%;
+}
+
+.acceso__insignia {
+  align-self: flex-start;
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background-color: var(--color-acento-suave);
+  color: var(--color-acento);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .acceso__titulo {

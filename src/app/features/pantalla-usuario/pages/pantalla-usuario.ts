@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 
+import { AUTENTICACION } from '../../../core/auth/autenticacion.token';
 import { ThemeService } from '../../../shared/services/theme.service';
 import { AnilloObjetivo } from '../components/anillo-objetivo/anillo-objetivo';
 import { EstadisticasPerfil } from '../components/estadisticas-perfil/estadisticas-perfil';
@@ -9,8 +10,8 @@ import { ListaLogros } from '../components/lista-logros/lista-logros';
 import { ListaVisitas } from '../components/lista-visitas/lista-visitas';
 import { PerfilCabecera } from '../components/perfil-cabecera/perfil-cabecera';
 import { TarjetaMembresia } from '../components/tarjeta-membresia/tarjeta-membresia';
-import datosPantalla from '../data/usuario.json';
-import {
+import { construirPerfilDeUsuario } from '../data/perfil-sesion';
+import type {
   AsistenciaDia,
   DatoPersonal,
   EstadisticaUsuario,
@@ -20,13 +21,30 @@ import {
   PantallaUsuarioData,
   Pestana,
   Usuario,
-  VisitaReciente,
+  VisitaReciente
 } from '../models/usuario.models';
 
+/**
+ * Pantalla de perfil del cliente (usuario).
+ *
+ * Muestra las estadísticas, el gráfico de asistencia, el objetivo mensual, los
+ * logros, las visitas recientes, los datos personales y la membresía,
+ * organizados en tres pestañas: Resumen, Asistencia y Datos.
+ *
+ * La identidad del perfil (nombre, iniciales, correo y fecha de nacimiento) se
+ * toma del usuario que tiene la sesión abierta.
+ *
+ * @author Carlos Valentin Santamaría
+ * @version 1.1
+ */
 @Component({
+  // Selector usado en las plantillas para insertar la pantalla de perfil.
   selector: 'app-pantalla-usuario',
+  // Componente independiente, sin necesidad de declararlo en un módulo.
   standalone: true,
+  // Optimiza el renderizado comprobando cambios solo cuando se notifican.
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // Componentes hijos que usa la plantilla del perfil.
   imports: [
     AnilloObjetivo,
     EstadisticasPerfil,
@@ -37,39 +55,63 @@ import {
     PerfilCabecera,
     TarjetaMembresia,
   ],
+  // Plantilla HTML de la pantalla de perfil.
   templateUrl: './pantalla-usuario.html',
+  // Hoja de estilos de la pantalla de perfil.
   styleUrl: './pantalla-usuario.css',
+  // Clases que se aplican dinámicamente al elemento anfitrión.
   host: {
+    // Activa los estilos oscuros cuando el tema lo indica.
     '[class.modo-oscuro]': 'isDarkMode()',
+    // Activa los estilos claros en caso contrario.
     '[class.modo-claro]': '!isDarkMode()',
   },
 })
 export class PantallaUsuario {
-  private readonly themeService = inject(ThemeService);
-
-  readonly isDarkMode = this.themeService.isDarkMode;
+  /** Pestaña actualmente activa: `resumen`, `asistencia` o `datos`. */
   readonly pestanaActiva = signal<Pestana>('resumen');
+  /** Porcentaje de progreso hacia el siguiente nivel de atleta. */
   readonly porcentajeNivel = computed(() => {
+    // Puntos necesarios para alcanzar el siguiente nivel.
     const siguiente = this.usuario().puntosSiguienteNivel;
+    // Evita la división por cero si no hay un siguiente nivel definido.
     if (!siguiente) return 0;
+    // Calcula y redondea el porcentaje completado.
     return Math.round((this.usuario().puntosNivel / siguiente) * 100);
   });
-  // Ajuste para importar JSON correctamente en entornos modernos
-  private readonly datos: PantallaUsuarioData = datosPantalla as unknown as PantallaUsuarioData;
+
+  /** Servicio compartido que controla el tema claro/oscuro. */
+  private readonly themeService = inject(ThemeService);
+  /** Indica si el modo oscuro está activo. */
+  readonly isDarkMode = this.themeService.isDarkMode;
+  /** Servicio de autenticación, de donde se obtiene el usuario de la sesión. */
+  private readonly auth = inject(AUTENTICACION);
+  /** Datos de la pantalla, con la identidad del usuario que ha iniciado sesión. */
+  private readonly datos: PantallaUsuarioData = construirPerfilDeUsuario(this.auth.usuarioActual());
+  /** Datos del usuario que ha iniciado sesión. */
   readonly usuario = signal<Usuario>(this.datos.usuario);
+  /** Estadísticas principales del perfil. */
   readonly estadisticas = signal<EstadisticaUsuario[]>(this.datos.estadisticas);
+  /** Número de asistencias por cada día de la semana. */
   readonly asistenciasSemana = signal<AsistenciaDia[]>(this.datos.asistenciasSemana);
+  /** Progreso del objetivo mensual de visitas. */
   readonly objetivo = signal<ObjetivoMensual>(this.datos.objetivoMensual);
+  /** Últimas visitas registradas en el gimnasio. */
   readonly visitasRecientes = signal<VisitaReciente[]>(this.datos.visitasRecientes);
+  /** Logros conseguidos y pendientes del usuario. */
   readonly logros = signal<Logro[]>(this.datos.logros);
+  /** Datos personales y de contacto del usuario. */
   readonly datosPersonales = signal<DatoPersonal[]>(this.datos.datosPersonales);
+  /** Información de la membresía y del estado de la cuota. */
   readonly membresia = signal<Membresia>(this.datos.membresia);
 
+  /**
+   * Cambia la pestaña visible del perfil.
+   *
+   * @param pestana Pestaña que debe mostrarse.
+   */
   setPestana(pestana: Pestana): void {
+    // Actualiza la pestaña activa.
     this.pestanaActiva.set(pestana);
-  }
-
-  toggleTheme(): void {
-    this.themeService.toggle();
   }
 }

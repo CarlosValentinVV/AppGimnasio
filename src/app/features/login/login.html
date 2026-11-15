@@ -3,10 +3,18 @@
   <div class="acceso__tarjeta">
 
     <!-- Vista de sesión iniciada -->
-    <section *ngIf="usuarioActivo; else formularios" aria-labelledby="acceso-sesion-titulo" class="acceso__sesion">
-      <h1 class="acceso__titulo" id="acceso-sesion-titulo">Hola, {{ usuarioActivo.nombre }}</h1>
-      <p class="acceso__texto">Has iniciado sesión con {{ usuarioActivo.email }}.</p>
-      <button type="button" class="acceso__boton" (click)="cerrarSesion()">Cerrar sesión</button>
+    <section class="acceso__sesion" *ngIf="usuarioActivo; else formularios">
+      <p class="acceso__insignia">Sesión iniciada</p>
+      <h1 class="acceso__titulo">Hola, {{ usuarioActivo.nombre }}</h1>
+      <p class="acceso__texto">
+        Has accedido con <strong>{{ usuarioActivo.email }}</strong>.
+      </p>
+      <p class="acceso__texto" *ngIf="fechaNacimientoLegible">
+        Fecha de nacimiento: {{ fechaNacimientoLegible }}
+      </p>
+      <button type="button" class="acceso__boton acceso__boton--secundario" (click)="cerrarSesion()">
+        Cerrar sesión
+      </button>
     </section>
 
     <ng-template #formularios>
@@ -45,8 +53,6 @@
         [formGroup]="loginForm"
         (ngSubmit)="iniciarSesion()"
         novalidate>
-
-        <p class="acceso__mensaje" role="status" *ngIf="mensaje">{{ mensaje }}</p>
 
         <label class="acceso__etiqueta" for="login-email">Correo electrónico</label>
         <input

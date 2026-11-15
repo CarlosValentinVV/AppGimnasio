@@ -96,26 +96,3 @@ h2, p {
   font-size: 0.925rem;
   text-align: right;
 }
-
-.boton-gestionar {
-  margin-top: 0.5rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--fuente-base);
-  font-weight: 700;
-  font-size: 0.925rem;
-  padding: 0.85rem 1.75rem;
-  border-radius: 9999px;
-  border: 1px solid transparent;
-  background: var(--accent-color);
-  color: var(--accent-text);
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.boton-gestionar:hover {
-  background: var(--accent-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px var(--accent-glow);
-}
