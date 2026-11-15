@@ -1,6 +1,6 @@
 ﻿import { signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 
 import { AUTENTICACION } from '../../../core/auth/autenticacion.token';
 import type { ServicioAutenticacion, UsuarioPublico } from '../../../core/auth/autenticacion.model';
@@ -51,7 +51,14 @@ describe('Header', () => {
     // Configura el entorno de pruebas con el componente, el router y la autenticación.
     await TestBed.configureTestingModule({
       imports: [Header],
-      providers: [provideRouter([]), { provide: AUTENTICACION, useValue: auth }]
+      providers: [
+        provideRouter([
+          { path: 'home', children: [] },
+          { path: 'login', children: [] },
+          { path: 'perfil', children: [] }
+        ]),
+        { provide: AUTENTICACION, useValue: auth }
+      ]
     }).compileComponents();
 
     // Crea la instancia del componente bajo prueba.
@@ -86,6 +93,7 @@ describe('Header', () => {
     expect(acceso.textContent).toContain('Acceso');
     expect(acceso.getAttribute('href')).toBe('/login');
     expect(compiled.querySelector('.enlace-perfil')).toBeFalsy();
+    expect(compiled.querySelector('.enlace-salir')).toBeFalsy();
     expect(component.haySesion()).toBe(false);
   });
 
@@ -103,7 +111,52 @@ describe('Header', () => {
     expect(perfil.textContent).toContain('Mi perfil');
     expect(perfil.getAttribute('href')).toBe('/perfil');
     expect(compiled.querySelector('.enlace-acceso')).toBeFalsy();
+    expect(compiled.querySelector('.enlace-salir')).toBeTruthy();
     expect(component.haySesion()).toBe(true);
+  });
+
+  it('debe cerrar la sesión y volver al inicio al pulsar "Salir"', async () => {
+    auth.sesion.set(USUARIO);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const boton = compiled.querySelector('.enlace-salir') as HTMLButtonElement;
+
+    // El botón muestra el texto y el título esperados.
+    expect(boton).toBeTruthy();
+    expect(boton.textContent).toContain('Salir');
+    expect(boton.getAttribute('title')).toBe('Cerrar sesión');
+
+    // Al pulsarlo se cierra la sesión y se abandona la zona privada.
+    boton.click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(component.haySesion()).toBe(false);
+    expect(compiled.querySelector('.enlace-acceso')).toBeTruthy();
+    expect(compiled.querySelector('.enlace-perfil')).toBeFalsy();
+    expect(TestBed.inject(Router).url).toBe('/home');
+  });
+
+  it('debe cerrar la sesión también desde el menú móvil', async () => {
+    auth.sesion.set(USUARIO);
+    component.toggleMobileMenu();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const boton = compiled.querySelector('.menu-movil-salir') as HTMLButtonElement;
+
+    expect(boton).toBeTruthy();
+    expect(boton.textContent).toContain('Cerrar sesión');
+
+    // El clic cierra la sesión, pliega el menú y navega al inicio.
+    boton.click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(component.mobileMenuOpen()).toBe(false);
+    expect(component.haySesion()).toBe(false);
+    expect(compiled.querySelector('.menu-movil')).toBeFalsy();
+    expect(TestBed.inject(Router).url).toBe('/home');
   });
 
   it('debe cambiar el botón al iniciar y cerrar sesión sin recargar la página', async () => {

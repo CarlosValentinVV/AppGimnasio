@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { AUTENTICACION } from '../../../core/auth/autenticacion.token';
 import { ThemeService } from '../../services/theme.service';
@@ -59,6 +59,18 @@ export class Header {
   private readonly auth = inject(AUTENTICACION);
   /** Indica si el usuario ha iniciado sesión o acaba de registrarse. */
   readonly haySesion = computed(() => this.auth.sesion() !== null);
+  /** Router usado para salir de las páginas privadas al cerrar sesión. */
+  private readonly router = inject(Router);
+
+  /** Cierra la sesión activa y vuelve a la página de inicio. */
+  async cerrarSesion(): Promise<void> {
+    // Elimina la sesión del servicio; la señal actualiza la cabecera al instante.
+    this.auth.cerrarSesion();
+    // Cierra el menú móvil si estaba desplegado.
+    this.closeMobileMenu();
+    // Abandona la zona privada y vuelve a una página pública.
+    await this.router.navigateByUrl('/home');
+  }
 
   /** Alterna entre el tema claro y el oscuro. */
   toggleTheme(): void {
