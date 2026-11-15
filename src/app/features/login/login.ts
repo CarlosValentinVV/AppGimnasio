@@ -6,15 +6,12 @@ import {
   ReactiveFormsModule,
   ValidationErrors,
   ValidatorFn,
-  Validators,
+  Validators
 } from '@angular/forms';
 
 import { AUTENTICACION } from '../../core/auth/autenticacion.token';
-import {
-  DatosRegistro,
-  ErrorAutenticacion,
-  UsuarioPublico,
-} from '../../core/auth/autenticacion.model';
+import { DatosRegistro, ErrorAutenticacion, UsuarioPublico } from '../../core/auth/autenticacion.model';
+import { ThemeService } from '../../shared/services/theme.service';
 
 /** Pestañas disponibles en la pantalla de acceso. */
 type ModoAcceso = 'login' | 'registro';
@@ -60,11 +57,18 @@ function coinciden(
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
+  host: {
+    '[class.modo-oscuro]': 'isDarkMode()',
+    '[class.modo-claro]': '!isDarkMode()',
+  },
 })
 export class Login {
   private readonly fb = inject(FormBuilder);
   private readonly auth = inject(AUTENTICACION);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly themeService = inject(ThemeService);
+
+  readonly isDarkMode = this.themeService.isDarkMode;
 
   modo: ModoAcceso = 'login';
   enviando = false;
@@ -119,9 +123,7 @@ export class Login {
 
   /** Error de grupo (los dos valores no coinciden), mostrado una vez tocado el campo de confirmación. */
   noCoinciden(error: string, campoConfirmacion: string): boolean {
-    return (
-      this.registroForm.hasError(error) && !!this.registroForm.get(campoConfirmacion)?.touched
-    );
+    return this.registroForm.hasError(error) && !!this.registroForm.get(campoConfirmacion)?.touched;
   }
 
   // Método público que valida el formulario de registro y crea la cuenta
