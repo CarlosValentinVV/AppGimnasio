@@ -94,8 +94,6 @@ export class Login {
   enviando = false;
   /** Mensaje de error mostrado al usuario, o `null` si no hay ninguno. */
   error: string | null = null;
-  /** Constructor de formularios reactivos. */
-  private readonly fb = inject(FormBuilder);
   /** Formulario reactivo de inicio de sesión (correo y contraseña). */
   readonly loginForm = this.fb.nonNullable.group({
     // Correo obligatorio con formato válido.
@@ -129,8 +127,6 @@ export class Login {
       ],
     },
   );
-  /** Servicio de autenticación inyectado mediante el token AUTENTICACION. */
-  private readonly auth = inject(AUTENTICACION);
   /** Router usado para entrar en el perfil en cuanto hay sesión. */
   private readonly router = inject(Router);
 
@@ -138,8 +134,6 @@ export class Login {
   readonly hoy = hoyISO();
   /** Usuario autenticado actualmente, o `null` si no hay sesión activa. */
   usuarioActivo: UsuarioPublico | null = this.auth.usuarioActual();
-  /** Referencia al detector de cambios para notificar actualizaciones con OnPush. */
-  private readonly cdr = inject(ChangeDetectorRef);
 
   /**
    * Fecha de nacimiento del usuario activo en formato `DD/MM/AAAA`.
