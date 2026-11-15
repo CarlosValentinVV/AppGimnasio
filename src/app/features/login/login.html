@@ -3,17 +3,20 @@
   <div class="acceso__tarjeta">
 
     <!-- Vista de sesión iniciada -->
-    <section class="acceso__sesion" *ngIf="usuarioActivo; else formularios">
-      <h1 class="acceso__titulo">Hola, {{ usuarioActivo.nombre }}</h1>
+    <section *ngIf="usuarioActivo; else formularios" aria-labelledby="acceso-sesion-titulo" class="acceso__sesion">
+      <h1 class="acceso__titulo" id="acceso-sesion-titulo">Hola, {{ usuarioActivo.nombre }}</h1>
       <p class="acceso__texto">Has iniciado sesión con {{ usuarioActivo.email }}.</p>
       <button type="button" class="acceso__boton" (click)="cerrarSesion()">Cerrar sesión</button>
     </section>
 
     <ng-template #formularios>
       <!-- Pestañas para alternar entre login y registro -->
-      <div class="acceso__pestañas" role="tablist">
+      <div aria-label="Iniciar sesión o registrarse" class="acceso__pestañas" role="tablist">
         <button
           type="button"
+          [attr.aria-selected]="modo === 'login'"
+          id="pestana-login"
+          role="tab"
           class="acceso__pestaña"
           [class.acceso__pestaña--activa]="modo === 'login'"
           (click)="cambiarModo('login')">
@@ -21,6 +24,9 @@
         </button>
         <button
           type="button"
+          [attr.aria-selected]="modo === 'registro'"
+          id="pestana-registro"
+          role="tab"
           class="acceso__pestaña"
           [class.acceso__pestaña--activa]="modo === 'registro'"
           (click)="cambiarModo('registro')">
@@ -30,7 +36,11 @@
 
       <!-- Formulario de inicio de sesión -->
       <form
+        [attr.aria-busy]="enviando"
+        aria-labelledby="pestana-login"
         class="acceso__formulario"
+        id="panel-login"
+        role="tabpanel"
         *ngIf="modo === 'login'"
         [formGroup]="loginForm"
         (ngSubmit)="iniciarSesion()"
@@ -46,8 +56,11 @@
           type="email"
           formControlName="email"
           placeholder="tucorreo@ejemplo.com"
+          [attr.aria-invalid]="loginInvalido('email')"
+          aria-describedby="login-email-error"
+          aria-required="true"
           autocomplete="username">
-        <p class="acceso__error" role="alert" *ngIf="loginInvalido('email')">
+        <p *ngIf="loginInvalido('email')" class="acceso__error" id="login-email-error" role="alert">
           Introduce un correo válido.
         </p>
 
@@ -59,23 +72,30 @@
           type="password"
           formControlName="password"
           placeholder="••••••••"
+          [attr.aria-invalid]="loginInvalido('password')"
+          aria-describedby="login-password-error"
+          aria-required="true"
           autocomplete="current-password">
-        <p class="acceso__error" role="alert" *ngIf="loginInvalido('password')">
+        <p *ngIf="loginInvalido('password')" class="acceso__error" id="login-password-error" role="alert">
           Escribe tu contraseña.
         </p>
 
-        <a class="acceso__enlace-secundario" aria-disabled="true" tabindex="-1">¿Has olvidado tu contraseña?</a>
+        <span aria-disabled="true" class="acceso__enlace-secundario">¿Has olvidado tu contraseña?</span>
 
         <p class="acceso__error acceso__error--general" role="alert" *ngIf="error">{{ error }}</p>
 
-        <button type="submit" class="acceso__boton" [disabled]="enviando">
+        <button [attr.aria-busy]="enviando" [disabled]="enviando" class="acceso__boton" type="submit">
           {{ enviando ? 'Entrando…' : 'Entrar' }}
         </button>
       </form>
 
       <!-- Formulario de registro -->
       <form
+        [attr.aria-busy]="enviando"
+        aria-labelledby="pestana-registro"
         class="acceso__formulario"
+        id="panel-registro"
+        role="tabpanel"
         *ngIf="modo === 'registro'"
         [formGroup]="registroForm"
         (ngSubmit)="registrar()"
@@ -89,8 +109,11 @@
           type="text"
           formControlName="nombre"
           placeholder="Nombre y apellidos"
+          [attr.aria-invalid]="invalido('nombre')"
+          aria-describedby="registro-nombre-error"
+          aria-required="true"
           autocomplete="name">
-        <p class="acceso__error" role="alert" *ngIf="invalido('nombre')">
+        <p *ngIf="invalido('nombre')" class="acceso__error" id="registro-nombre-error" role="alert">
           Escribe tu nombre (mínimo 3 caracteres).
         </p>
 
@@ -102,8 +125,11 @@
           type="email"
           formControlName="email"
           placeholder="tucorreo@ejemplo.com"
+          [attr.aria-invalid]="invalido('email')"
+          aria-describedby="registro-email-error"
+          aria-required="true"
           autocomplete="email">
-        <p class="acceso__error" role="alert" *ngIf="invalido('email')">
+        <p *ngIf="invalido('email')" class="acceso__error" id="registro-email-error" role="alert">
           Introduce un correo válido, por ejemplo tucorreo@ejemplo.com.
         </p>
 
@@ -115,11 +141,15 @@
           type="email"
           formControlName="confirmarEmail"
           placeholder="Repite tu correo"
+          [attr.aria-invalid]="invalido('confirmarEmail') || noCoinciden('emailsDistintos', 'confirmarEmail')"
+          aria-describedby="registro-email-confirmar-error registro-emails-no-coinciden"
+          aria-required="true"
           autocomplete="off">
-        <p class="acceso__error" role="alert" *ngIf="invalido('confirmarEmail')">
+        <p *ngIf="invalido('confirmarEmail')" class="acceso__error" id="registro-email-confirmar-error" role="alert">
           Repite tu correo electrónico.
         </p>
-        <p class="acceso__error" role="alert" *ngIf="noCoinciden('emailsDistintos', 'confirmarEmail')">
+        <p *ngIf="noCoinciden('emailsDistintos', 'confirmarEmail')" class="acceso__error" id="registro-emails-no-coinciden"
+           role="alert">
           Los correos no coinciden.
         </p>
 
@@ -131,8 +161,11 @@
           type="date"
           formControlName="fechaNacimiento"
           [max]="hoy"
+          [attr.aria-invalid]="invalido('fechaNacimiento')"
+          aria-describedby="registro-nacimiento-error"
+          aria-required="true"
           autocomplete="bday">
-        <p class="acceso__error" role="alert" *ngIf="invalido('fechaNacimiento')">
+        <p *ngIf="invalido('fechaNacimiento')" class="acceso__error" id="registro-nacimiento-error" role="alert">
           Indica una fecha de nacimiento válida (no puede ser futura).
         </p>
 
@@ -144,9 +177,12 @@
           type="password"
           formControlName="password"
           placeholder="••••••••"
+          [attr.aria-invalid]="invalido('password')"
+          aria-describedby="registro-password-ayuda registro-password-error"
+          aria-required="true"
           autocomplete="new-password">
-        <p class="acceso__ayuda">Mínimo 8 caracteres.</p>
-        <p class="acceso__error" role="alert" *ngIf="invalido('password')">
+        <p class="acceso__ayuda" id="registro-password-ayuda">Mínimo 8 caracteres.</p>
+        <p *ngIf="invalido('password')" class="acceso__error" id="registro-password-error" role="alert">
           La contraseña debe tener al menos 8 caracteres.
         </p>
 
@@ -158,17 +194,22 @@
           type="password"
           formControlName="confirmarPassword"
           placeholder="••••••••"
+          [attr.aria-invalid]="invalido('confirmarPassword') || noCoinciden('passwordsDistintas', 'confirmarPassword')"
+          aria-describedby="registro-password-confirmar-error registro-passwords-no-coinciden"
+          aria-required="true"
           autocomplete="new-password">
-        <p class="acceso__error" role="alert" *ngIf="invalido('confirmarPassword')">
+        <p *ngIf="invalido('confirmarPassword')" class="acceso__error" id="registro-password-confirmar-error"
+           role="alert">
           Repite tu contraseña.
         </p>
-        <p class="acceso__error" role="alert" *ngIf="noCoinciden('passwordsDistintas', 'confirmarPassword')">
+        <p *ngIf="noCoinciden('passwordsDistintas', 'confirmarPassword')" class="acceso__error" id="registro-passwords-no-coinciden"
+           role="alert">
           Las contraseñas no coinciden.
         </p>
 
         <p class="acceso__error acceso__error--general" role="alert" *ngIf="error">{{ error }}</p>
 
-        <button type="submit" class="acceso__boton" [disabled]="enviando">
+        <button [attr.aria-busy]="enviando" [disabled]="enviando" class="acceso__boton" type="submit">
           {{ enviando ? 'Creando cuenta…' : 'Crear cuenta' }}
         </button>
       </form>
