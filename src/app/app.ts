@@ -12,7 +12,7 @@ import { ThemeService } from './shared/services/theme.service';
  * anfitrión la clase del tema activo para que toda la interfaz cambie de
  * aspecto de forma global.
  *
- * @author raulmoron
+ * @author Todo el equipo
  * @version 1.0
  */
 @Component({

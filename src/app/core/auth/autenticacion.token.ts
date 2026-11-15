@@ -11,7 +11,7 @@ import type { ServicioAutenticacion } from './autenticacion.model';
  * sistema de almacenamiento basta con modificar la `factory` de este token,
  * sin tocar los componentes que lo consumen.
  *
- * @author raulmoron
+ * @author Raúl Morón Chantal
  * @version 1.0
  */
 export const AUTENTICACION = new InjectionToken<ServicioAutenticacion>('AUTENTICACION', {

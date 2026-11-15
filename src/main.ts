@@ -8,7 +8,7 @@ import { App } from './app/app';
  * Arranca el componente raíz `App` con la configuración global definida en
  * `appConfig` y registra en consola cualquier error fatal de arranque.
  *
- * @author raulmoron
+ * @author Todo el equipo
  * @version 1.0
  */
 // Inicia la aplicación y captura cualquier error de arranque.

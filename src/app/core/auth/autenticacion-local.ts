@@ -121,7 +121,7 @@ async function derivarHash(
  * con las herramientas de desarrollo puede ver y modificar los datos. En un
  * entorno real la autenticación debe resolverse en el servidor.
  *
- * @author raulmoron
+ * @author Raúl Morón Chantal
  * @version 1.0
  */
 export class AutenticacionLocal implements ServicioAutenticacion {
