@@ -12,6 +12,7 @@ import {
 
 import { AUTENTICACION } from '../../core/auth/autenticacion.token';
 import { DatosRegistro, ErrorAutenticacion, UsuarioPublico } from '../../core/auth/autenticacion.model';
+import { ThemeService } from '../../shared/services/theme.service';
 
 /** Pestañas disponibles en la pantalla de acceso. */
 type ModoAcceso = 'login' | 'registro';
@@ -75,9 +76,19 @@ function coinciden(
   templateUrl: './login.html',
   // Hoja de estilos del componente.
   styleUrl: './login.css',
+  host: {
+    '[class.modo-oscuro]': 'isDarkMode()',
+    '[class.modo-claro]': '!isDarkMode()',
+  },
 })
 export class Login {
-  /** Pestaña activa: inicio de sesión o registro. */
+  private readonly fb = inject(FormBuilder);
+  private readonly auth = inject(AUTENTICACION);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly themeService = inject(ThemeService);
+
+  readonly isDarkMode = this.themeService.isDarkMode;
+
   modo: ModoAcceso = 'login';
   /** Indica si hay una operación de autenticación en curso. */
   enviando = false;
@@ -177,10 +188,7 @@ export class Login {
 
   /** Error de grupo (los dos valores no coinciden), mostrado una vez tocado el campo de confirmación. */
   noCoinciden(error: string, campoConfirmacion: string): boolean {
-    // Devuelve verdadero si el grupo tiene el error y la confirmación ya fue tocada.
-    return (
-      this.registroForm.hasError(error) && !!this.registroForm.get(campoConfirmacion)?.touched
-    );
+    return this.registroForm.hasError(error) && !!this.registroForm.get(campoConfirmacion)?.touched;
   }
 
   /** Valida el formulario de registro, crea la cuenta e inicia la sesión si es correcto. */
