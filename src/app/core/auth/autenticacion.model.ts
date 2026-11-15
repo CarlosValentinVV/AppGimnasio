@@ -1,3 +1,5 @@
+import type { Signal } from '@angular/core';
+
 /**
  * Modelos y contrato del sistema de autenticación.
  *
@@ -5,7 +7,7 @@
  * error tipado que se muestra al usuario.
  *
  * @author Raúl Morón Chantal
- * @version 1.1
+ * @version 1.2
  */
 
 /** Datos que introduce la persona en el formulario de registro (sin los campos de confirmación). */
@@ -49,6 +51,15 @@ export interface ServicioAutenticacion {
 
   /** Devuelve el usuario de la sesión activa o `null` si no hay sesión. */
   usuarioActual(): UsuarioPublico | null;
+
+  /**
+   * Sesión activa como señal reactiva.
+   *
+   * Cambia al iniciar sesión, al registrar una cuenta y al cerrarla, de modo
+   * que componentes como la cabecera se actualicen sin depender de la
+   * navegación.
+   */
+  readonly sesion: Signal<UsuarioPublico | null>;
 }
 
 /** Códigos internos de error que puede emitir el servicio de autenticación. */

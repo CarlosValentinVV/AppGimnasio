@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 
+import { AUTENTICACION } from '../../../core/auth/autenticacion.token';
 import { ThemeService } from '../../services/theme.service';
 
 /** Enlace de navegación del menú principal, definido por una etiqueta y un fragmento de la página. */
@@ -54,6 +55,22 @@ export class Header {
   private readonly themeService = inject(ThemeService);
   /** Indica si el tema oscuro está activo (señal de solo lectura). */
   readonly isDarkMode = this.themeService.isDarkMode;
+  /** Servicio de autenticación, usado para saber si hay una sesión abierta. */
+  private readonly auth = inject(AUTENTICACION);
+  /** Indica si el usuario ha iniciado sesión o acaba de registrarse. */
+  readonly haySesion = computed(() => this.auth.sesion() !== null);
+  /** Router usado para salir de las páginas privadas al cerrar sesión. */
+  private readonly router = inject(Router);
+
+  /** Cierra la sesión activa y vuelve a la página de inicio. */
+  async cerrarSesion(): Promise<void> {
+    // Elimina la sesión del servicio; la señal actualiza la cabecera al instante.
+    this.auth.cerrarSesion();
+    // Cierra el menú móvil si estaba desplegado.
+    this.closeMobileMenu();
+    // Abandona la zona privada y vuelve a una página pública.
+    await this.router.navigateByUrl('/home');
+  }
 
   /** Alterna entre el tema claro y el oscuro. */
   toggleTheme(): void {

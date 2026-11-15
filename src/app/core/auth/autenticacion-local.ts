@@ -1,3 +1,5 @@
+import { signal } from '@angular/core';
+
 import { DatosRegistro, ErrorAutenticacion, ServicioAutenticacion, UsuarioPublico } from './autenticacion.model';
 
 /**
@@ -122,9 +124,17 @@ async function derivarHash(
  * entorno real la autenticación debe resolverse en el servidor.
  *
  * @author Raúl Morón Chantal
- * @version 1.1
+ * @version 1.2
  */
 export class AutenticacionLocal implements ServicioAutenticacion {
+  /**
+   * Sesión activa como señal reactiva.
+   *
+   * Se inicializa con la sesión guardada en `sessionStorage` y se actualiza
+   * cada vez que se inicia o se cierra sesión.
+   */
+  readonly sesion = signal<UsuarioPublico | null>(this.leerSesion());
+
   /**
    * Crea una cuenta nueva, abre la sesión y devuelve sus datos públicos.
    *
@@ -173,6 +183,8 @@ export class AutenticacionLocal implements ServicioAutenticacion {
     const publico = this.aPublico(nuevo);
     // Abre la sesión del usuario recién registrado.
     sessionStorage.setItem(CLAVE_SESION, JSON.stringify(publico));
+    // Refleja la nueva sesión en la señal reactiva.
+    this.sesion.set(publico);
 
     // Devuelve los datos públicos del usuario creado y ya autenticado.
     return publico;
@@ -214,6 +226,8 @@ export class AutenticacionLocal implements ServicioAutenticacion {
     const publico = this.aPublico(usuario);
     // Guarda la sesión activa en sessionStorage.
     sessionStorage.setItem(CLAVE_SESION, JSON.stringify(publico));
+    // Refleja la nueva sesión en la señal reactiva.
+    this.sesion.set(publico);
     // Devuelve el usuario autenticado.
     return publico;
   }
@@ -224,6 +238,8 @@ export class AutenticacionLocal implements ServicioAutenticacion {
   cerrarSesion(): void {
     // Borra la clave de sesión del almacenamiento de la pestaña.
     sessionStorage.removeItem(CLAVE_SESION);
+    // Refleja el cierre de sesión en la señal reactiva.
+    this.sesion.set(null);
   }
 
   /**
@@ -233,6 +249,17 @@ export class AutenticacionLocal implements ServicioAutenticacion {
    * datos almacenados no son válidos.
    */
   usuarioActual(): UsuarioPublico | null {
+    // Devuelve el valor actual de la señal de sesión.
+    return this.sesion();
+  }
+
+  /**
+   * Lee la sesión guardada en `sessionStorage`.
+   *
+   * @returns El usuario público guardado, o `null` si no hay sesión o los
+   * datos almacenados no son válidos.
+   */
+  private leerSesion(): UsuarioPublico | null {
     try {
       // Recupera el texto de la sesión guardada.
       const texto = sessionStorage.getItem(CLAVE_SESION);

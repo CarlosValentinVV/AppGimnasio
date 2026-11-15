@@ -1,3 +1,4 @@
+import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router, UrlTree } from '@angular/router';
 
@@ -6,7 +7,10 @@ import type { ServicioAutenticacion, UsuarioPublico } from './autenticacion.mode
 import { sesionGuard } from './sesion.guard';
 
 /** Crea un servicio de autenticación falso que devuelve la sesión indicada. */
-function crearAuthFalsa(sesion: UsuarioPublico | null): ServicioAutenticacion {
+function crearAuthFalsa(usuario: UsuarioPublico | null): ServicioAutenticacion {
+  // Sesión reactiva que expone el servicio falso.
+  const sesion = signal<UsuarioPublico | null>(usuario);
+
   return {
     // El guard no registra usuarios.
     registrar: () => Promise.reject(new Error('No usado en estas pruebas')),
@@ -15,7 +19,9 @@ function crearAuthFalsa(sesion: UsuarioPublico | null): ServicioAutenticacion {
     // El guard no cierra sesión.
     cerrarSesion: () => undefined,
     // Devuelve la sesión configurada para la prueba.
-    usuarioActual: () => sesion,
+    usuarioActual: () => sesion(),
+    // Señal de sesión que consumirían otros componentes.
+    sesion
   };
 }
 

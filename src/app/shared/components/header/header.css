@@ -204,7 +204,8 @@ a {
 }
 
 .enlace-acceso,
-.enlace-perfil {
+.enlace-perfil,
+.enlace-salir {
   padding-inline: 1rem;
 }
 
@@ -272,6 +273,22 @@ a {
   color: var(--accent-color, #2563eb) !important;
 }
 
+.menu-movil-salir {
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  font-family: var(--fuente-base, 'Plus Jakarta Sans', sans-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--tinta-principal, #0f172a);
+  cursor: pointer;
+}
+
+.menu-movil-salir:hover {
+  color: var(--accent-color, #2563eb);
+}
+
 .menu-movil-tema {
   display: flex;
   align-items: center;
@@ -305,7 +322,7 @@ a {
 
 /* ---------- Responsive ---------- */
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
   .navegacion-desktop {
     display: none;
   }
@@ -321,7 +338,8 @@ a {
   }
 
   .enlace-acceso,
-  .enlace-perfil {
+  .enlace-perfil,
+  .enlace-salir {
     display: none;
   }
 
