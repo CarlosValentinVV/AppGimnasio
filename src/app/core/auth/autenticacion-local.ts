@@ -122,14 +122,17 @@ async function derivarHash(
  * entorno real la autenticación debe resolverse en el servidor.
  *
  * @author Raúl Morón Chantal
- * @version 1.0
+ * @version 1.1
  */
 export class AutenticacionLocal implements ServicioAutenticacion {
   /**
-   * Crea una cuenta nueva y devuelve sus datos públicos.
+   * Crea una cuenta nueva, abre la sesión y devuelve sus datos públicos.
+   *
+   * Registrar una cuenta equivale a acceder con ella, así que la sesión se
+   * guarda igual que en {@link iniciarSesion}.
    *
    * @param datos Datos introducidos en el formulario de registro.
-   * @returns El usuario público recién creado.
+   * @returns El usuario público recién creado, con la sesión ya abierta.
    * @throws {ErrorAutenticacion} Si el correo ya está registrado o el entorno no es seguro.
    */
   async registrar(datos: DatosRegistro): Promise<UsuarioPublico> {
@@ -166,8 +169,13 @@ export class AutenticacionLocal implements ServicioAutenticacion {
     // Persiste la lista completa en localStorage.
     this.guardarUsuarios(usuarios);
 
-    // Devuelve solo los datos públicos del usuario creado.
-    return this.aPublico(nuevo);
+    // Proyecta el usuario almacenado a su versión pública.
+    const publico = this.aPublico(nuevo);
+    // Abre la sesión del usuario recién registrado.
+    sessionStorage.setItem(CLAVE_SESION, JSON.stringify(publico));
+
+    // Devuelve los datos públicos del usuario creado y ya autenticado.
+    return publico;
   }
 
   /**

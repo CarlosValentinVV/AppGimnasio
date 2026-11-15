@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 
+import { AUTENTICACION } from '../../../core/auth/autenticacion.token';
 import { ThemeService } from '../../../shared/services/theme.service';
 import { AnilloObjetivo } from '../components/anillo-objetivo/anillo-objetivo';
 import { EstadisticasPerfil } from '../components/estadisticas-perfil/estadisticas-perfil';
@@ -9,7 +10,7 @@ import { ListaLogros } from '../components/lista-logros/lista-logros';
 import { ListaVisitas } from '../components/lista-visitas/lista-visitas';
 import { PerfilCabecera } from '../components/perfil-cabecera/perfil-cabecera';
 import { TarjetaMembresia } from '../components/tarjeta-membresia/tarjeta-membresia';
-import { DATOS_PANTALLA_USUARIO } from '../data/usuario.data';
+import { construirPerfilDeUsuario } from '../data/perfil-sesion';
 import type {
   AsistenciaDia,
   DatoPersonal,
@@ -30,8 +31,11 @@ import type {
  * logros, las visitas recientes, los datos personales y la membresía,
  * organizados en tres pestañas: Resumen, Asistencia y Datos.
  *
+ * La identidad del perfil (nombre, iniciales, correo y fecha de nacimiento) se
+ * toma del usuario que tiene la sesión abierta.
+ *
  * @author Carlos Valentin Santamaría
- * @version 1.0
+ * @version 1.1
  */
 @Component({
   // Selector usado en las plantillas para insertar la pantalla de perfil.
@@ -80,8 +84,10 @@ export class PantallaUsuario {
   private readonly themeService = inject(ThemeService);
   /** Indica si el modo oscuro está activo. */
   readonly isDarkMode = this.themeService.isDarkMode;
-  /** Datos estáticos de la pantalla de perfil. */
-  private readonly datos: PantallaUsuarioData = DATOS_PANTALLA_USUARIO;
+  /** Servicio de autenticación, de donde se obtiene el usuario de la sesión. */
+  private readonly auth = inject(AUTENTICACION);
+  /** Datos de la pantalla, con la identidad del usuario que ha iniciado sesión. */
+  private readonly datos: PantallaUsuarioData = construirPerfilDeUsuario(this.auth.usuarioActual());
   /** Datos del usuario que ha iniciado sesión. */
   readonly usuario = signal<Usuario>(this.datos.usuario);
   /** Estadísticas principales del perfil. */

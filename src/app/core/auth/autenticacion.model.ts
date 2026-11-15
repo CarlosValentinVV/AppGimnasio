@@ -5,7 +5,7 @@
  * error tipado que se muestra al usuario.
  *
  * @author Raúl Morón Chantal
- * @version 1.0
+ * @version 1.1
  */
 
 /** Datos que introduce la persona en el formulario de registro (sin los campos de confirmación). */
@@ -38,7 +38,7 @@ export interface UsuarioPublico {
  * implementación concreta.
  */
 export interface ServicioAutenticacion {
-  /** Crea una cuenta nueva y devuelve sus datos públicos. */
+  /** Crea una cuenta nueva, abre su sesión y devuelve sus datos públicos. */
   registrar(datos: DatosRegistro): Promise<UsuarioPublico>;
 
   /** Comprueba las credenciales, abre la sesión y devuelve el usuario. */
