@@ -15,7 +15,7 @@ interface EnlaceFooter {
  * Agrupa los enlaces a las secciones del gimnasio y a las membresías, muestra
  * el año actual y permite volver al inicio de la página.
  *
- * @author raulmoron
+ * @author Izan García Iglesias
  * @version 1.0
  */
 @Component({

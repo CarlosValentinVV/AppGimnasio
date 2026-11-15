@@ -17,7 +17,7 @@ interface EnlaceNavegacion {
  * Muestra la navegación por secciones de la página de inicio, el botón de
  * cambio de tema y el menú móvil desplegable.
  *
- * @author raulmoron
+ * @author Izan García Iglesias
  * @version 1.0
  */
 @Component({
