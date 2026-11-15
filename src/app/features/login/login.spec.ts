@@ -1,3 +1,4 @@
+import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter, Router } from '@angular/router';
@@ -63,7 +64,7 @@ interface AuthEspia {
  */
 function crearAuthFalsa(opciones: OpcionesAuthFalsa = {}): AuthEspia {
   // Sesión que mantiene la implementación falsa entre llamadas.
-  let sesion: UsuarioPublico | null = opciones.usuario ?? null;
+  const sesionActiva = signal<UsuarioPublico | null>(opciones.usuario ?? null);
 
   const iniciarSesion = vi.fn(async (email: string, password: string) => {
     // Reproduce el fallo configurado, si lo hay.
@@ -71,8 +72,9 @@ function crearAuthFalsa(opciones: OpcionesAuthFalsa = {}): AuthEspia {
       throw opciones.errorLogin;
     }
     // Devuelve el usuario de prueba con el correo introducido.
-    sesion = { ...USUARIO_ANA, email };
-    return sesion;
+    const usuario: UsuarioPublico = { ...USUARIO_ANA, email };
+    sesionActiva.set(usuario);
+    return usuario;
   });
 
   const registrar = vi.fn(async (datos: DatosRegistro) => {
@@ -81,17 +83,18 @@ function crearAuthFalsa(opciones: OpcionesAuthFalsa = {}): AuthEspia {
       throw opciones.errorRegistro;
     }
     // La cuenta creada queda autenticada con los datos introducidos.
-    sesion = {
+    const usuario: UsuarioPublico = {
       nombre: datos.nombre,
       email: datos.email,
       fechaNacimiento: datos.fechaNacimiento
     };
-    return sesion;
+    sesionActiva.set(usuario);
+    return usuario;
   });
 
   const cerrarSesion = vi.fn(() => {
     // Cerrar sesión olvida al usuario activo.
-    sesion = null;
+    sesionActiva.set(null);
   });
 
   return {
@@ -99,7 +102,8 @@ function crearAuthFalsa(opciones: OpcionesAuthFalsa = {}): AuthEspia {
       iniciarSesion,
       registrar,
       cerrarSesion,
-      usuarioActual: () => sesion
+      usuarioActual: () => sesionActiva(),
+      sesion: sesionActiva
     },
     iniciarSesion,
     registrar,

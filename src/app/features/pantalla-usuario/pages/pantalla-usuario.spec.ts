@@ -1,3 +1,4 @@
+import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AUTENTICACION } from '../../../core/auth/autenticacion.token';
@@ -22,6 +23,8 @@ const AUTH_FALSA: ServicioAutenticacion = {
   cerrarSesion: () => undefined,
   // Devuelve siempre la sesión de prueba.
   usuarioActual: () => SESION,
+  // Señal reactiva con la sesión de prueba.
+  sesion: signal(SESION)
 };
 
 /** Pruebas de la pantalla de perfil: creación del componente y datos del usuario. */
