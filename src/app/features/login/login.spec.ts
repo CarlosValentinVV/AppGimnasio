@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideRouter, Router } from '@angular/router';
 
 import { AUTENTICACION } from '../../core/auth/autenticacion.token';
 import type {
@@ -19,6 +20,8 @@ describe('Login Component (Pruebas Unitarias)', () => {
     await TestBed.configureTestingModule({
       // Al ser un Standalone Component, se añade en 'imports' y no en 'declarations'
       imports: [Login],
+      // El componente navega al perfil, así que necesita el router.
+      providers: [provideRouter([{ path: 'perfil', children: [] }])],
     }).compileComponents();
 
     // Creamos la instancia del fixture (el entorno del componente)
@@ -155,7 +158,11 @@ describe('Login Component (sesión)', () => {
   async function montar(auth: ServicioAutenticacion): Promise<ComponentFixture<Login>> {
     await TestBed.configureTestingModule({
       imports: [Login],
-      providers: [{ provide: AUTENTICACION, useValue: auth }],
+      providers: [
+        { provide: AUTENTICACION, useValue: auth },
+        // Ruta de destino tras autenticarse.
+        provideRouter([{ path: 'perfil', children: [] }]),
+      ],
     }).compileComponents();
 
     const fixture = TestBed.createComponent(Login);
@@ -196,6 +203,8 @@ describe('Login Component (sesión)', () => {
 
     expect(compiled.querySelector('.acceso__titulo')?.textContent).toContain('Ana Pérez');
     expect(compiled.querySelector('.acceso__texto')?.textContent).toContain('ana@ejemplo.com');
+    // Tras autenticarse se entra automáticamente en el perfil del usuario.
+    expect(TestBed.inject(Router).url).toBe('/perfil');
   });
 
   it('debe iniciar sesión automáticamente al registrar una cuenta', async () => {
@@ -221,6 +230,8 @@ describe('Login Component (sesión)', () => {
     expect(component.usuarioActivo?.nombre).toBe('Luis Gómez');
     expect(compiled.querySelector('.acceso__titulo')?.textContent).toContain('Luis Gómez');
     expect(compiled.querySelector('.acceso__sesion')?.textContent).toContain('luis@ejemplo.com');
+    // Con la cuenta recién creada se entra automáticamente en el perfil.
+    expect(TestBed.inject(Router).url).toBe('/perfil');
   });
 
   it('debe volver a los formularios al cerrar sesión', async () => {

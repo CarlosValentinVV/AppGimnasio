@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import {
   AbstractControl,
   FormBuilder,
@@ -119,6 +120,8 @@ export class Login {
   );
   /** Servicio de autenticación inyectado mediante el token AUTENTICACION. */
   private readonly auth = inject(AUTENTICACION);
+  /** Router usado para entrar en el perfil en cuanto hay sesión. */
+  private readonly router = inject(Router);
 
   /** Fecha máxima del selector de fecha de nacimiento. */
   readonly hoy = hoyISO();
@@ -202,6 +205,8 @@ export class Login {
     this.error = null;
     // Marca la operación como en curso.
     this.enviando = true;
+    // Indica si la cuenta se ha creado correctamente.
+    let autenticado = false;
     try {
       // Crea la cuenta y abre su sesión en el servicio de autenticación.
       this.usuarioActivo = await this.auth.registrar(datos);
@@ -209,6 +214,8 @@ export class Login {
       this.registroForm.reset();
       // Deja limpio el formulario de acceso para cuando se cierre la sesión.
       this.loginForm.reset();
+      // La cuenta se ha creado y la sesión está abierta.
+      autenticado = true;
     } catch (e) {
       // Traduce el error a un texto apto para la interfaz.
       this.error = this.textoError(e);
@@ -217,6 +224,11 @@ export class Login {
       this.enviando = false;
       // Notifica el cambio si la aplicación funciona sin zone.js.
       this.cdr.markForCheck();
+    }
+
+    // Con la cuenta creada se entra directamente en el perfil del usuario.
+    if (autenticado) {
+      await this.router.navigateByUrl('/perfil');
     }
   }
 
@@ -235,11 +247,15 @@ export class Login {
     this.error = null;
     // Marca la operación como en curso.
     this.enviando = true;
+    // Indica si el acceso se ha completado correctamente.
+    let autenticado = false;
     try {
       // Autentica al usuario y guarda su sesión.
       this.usuarioActivo = await this.auth.iniciarSesion(email, password);
       // Vacía el formulario tras un acceso correcto.
       this.loginForm.reset();
+      // Las credenciales eran correctas y la sesión está abierta.
+      autenticado = true;
     } catch (e) {
       // Traduce el error a un texto apto para la interfaz.
       this.error = this.textoError(e);
@@ -248,6 +264,11 @@ export class Login {
       this.enviando = false;
       // Notifica el cambio si la aplicación funciona sin zone.js.
       this.cdr.markForCheck();
+    }
+
+    // Con el acceso correcto se entra directamente en el perfil del usuario.
+    if (autenticado) {
+      await this.router.navigateByUrl('/perfil');
     }
   }
 
