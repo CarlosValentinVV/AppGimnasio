@@ -52,11 +52,14 @@ function coinciden(
 
 /**
  * Componente de acceso de la aplicación.
- * Permite alternar entre inicio de sesión y registro, valida los formularios
- * y delega el almacenamiento en el servicio inyectado con AUTENTICACION.
+ *
+ * Permite alternar entre inicio de sesión y registro, valida los formularios y
+ * delega el almacenamiento en el servicio inyectado con AUTENTICACION. Cuando
+ * hay una sesión activa, en lugar de los formularios muestra los datos del
+ * usuario que ha accedido o acaba de registrarse.
  *
  * @author Raúl Morón Chantal
- * @version 1.0
+ * @version 1.1
  */
 @Component({
   // Selector usado en las plantillas para insertar la pantalla de acceso.
@@ -79,8 +82,6 @@ export class Login {
   enviando = false;
   /** Mensaje de error mostrado al usuario, o `null` si no hay ninguno. */
   error: string | null = null;
-  /** Mensaje informativo mostrado al usuario, o `null` si no hay ninguno. */
-  mensaje: string | null = null;
   /** Constructor de formularios reactivos. */
   private readonly fb = inject(FormBuilder);
   /** Formulario reactivo de inicio de sesión (correo y contraseña). */
@@ -126,14 +127,31 @@ export class Login {
   /** Referencia al detector de cambios para notificar actualizaciones con OnPush. */
   private readonly cdr = inject(ChangeDetectorRef);
 
+  /**
+   * Fecha de nacimiento del usuario activo en formato `DD/MM/AAAA`.
+   *
+   * Devuelve una cadena vacía si no hay sesión, para que la plantilla pueda
+   * ocultar la línea con un simple `*ngIf`.
+   */
+  get fechaNacimientoLegible(): string {
+    // Recupera la fecha guardada del usuario activo, si existe.
+    const fecha = this.usuarioActivo?.fechaNacimiento;
+    // Sin fecha no hay nada que mostrar.
+    if (!fecha) {
+      return '';
+    }
+    // Separa el formato ISO (`AAAA-MM-DD`) en sus tres partes.
+    const [anio, mes, dia] = fecha.split('-');
+    // Reordena las partes al formato habitual en España.
+    return `${dia}/${mes}/${anio}`;
+  }
+
   /** Alterna entre la pestaña de inicio de sesión y la de registro. */
   cambiarModo(nuevoModo: ModoAcceso): void {
     // Actualiza la pestaña activa.
     this.modo = nuevoModo;
     // Limpia cualquier error previo.
     this.error = null;
-    // Limpia cualquier mensaje informativo previo.
-    this.mensaje = null;
     // Avisa a Angular de que la vista ha cambiado (necesario con OnPush).
     this.cdr.markForCheck();
   }
@@ -162,7 +180,7 @@ export class Login {
     );
   }
 
-  /** Valida el formulario de registro y crea la cuenta si es correcto. */
+  /** Valida el formulario de registro, crea la cuenta e inicia la sesión si es correcto. */
   async registrar(): Promise<void> {
     // Si el formulario no es válido, marca todos los campos y detiene el registro.
     if (this.registroForm.invalid) {
@@ -180,22 +198,17 @@ export class Login {
       password: valores.password,
     };
 
-    // Limpia errores y mensajes anteriores.
+    // Limpia errores anteriores.
     this.error = null;
-    this.mensaje = null;
     // Marca la operación como en curso.
     this.enviando = true;
     try {
-      // Crea la cuenta en el servicio de autenticación.
-      await this.auth.registrar(datos);
+      // Crea la cuenta y abre su sesión en el servicio de autenticación.
+      this.usuarioActivo = await this.auth.registrar(datos);
       // Vacía el formulario de registro.
       this.registroForm.reset();
-      // Prepara el formulario de login con el correo recién registrado.
-      this.loginForm.reset({ email: datos.email, password: '' });
-      // Cambia a la pestaña de inicio de sesión.
-      this.modo = 'login';
-      // Informa de que la cuenta se ha creado correctamente.
-      this.mensaje = 'Cuenta creada. Ya puedes iniciar sesión.';
+      // Deja limpio el formulario de acceso para cuando se cierre la sesión.
+      this.loginForm.reset();
     } catch (e) {
       // Traduce el error a un texto apto para la interfaz.
       this.error = this.textoError(e);
@@ -218,9 +231,8 @@ export class Login {
     // Extrae el correo y la contraseña introducidos.
     const { email, password } = this.loginForm.getRawValue();
 
-    // Limpia errores y mensajes anteriores.
+    // Limpia errores anteriores.
     this.error = null;
-    this.mensaje = null;
     // Marca la operación como en curso.
     this.enviando = true;
     try {
