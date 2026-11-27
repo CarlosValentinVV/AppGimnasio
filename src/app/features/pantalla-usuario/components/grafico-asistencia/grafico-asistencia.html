@@ -2,6 +2,7 @@
   <h2 class="titulo-tarjeta">Asistencia semanal</h2>
   <p class="subtitulo-tarjeta">Entrenamientos por día esta semana</p>
 
+  <!-- Barras CSS escaladas con maxVisitas() y total() calculados en la clase -->
   <div [attr.aria-label]="'Entrenamientos esta semana: ' + total()" class="grafico-semanal" role="img">
     @for (dia of asistencias(); track dia.dia) {
       <div class="grafico-col">
