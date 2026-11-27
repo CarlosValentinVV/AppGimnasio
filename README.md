@@ -123,7 +123,16 @@ Los enlaces del header *Por qué elegirnos, Clases, Planes, Opiniones y Pregunta
 - **npm 11+**
 - Angular CLI 22.2+ *(opcional: el proyecto incluye su propia copia y se puede usar con `npm`)*
 
-Comprobar versiones con `node --version` y `npm --version`.
+El requisito está **declarado en el proyecto**, no solo en esta documentación:
+
+| Archivo | Para qué sirve |
+|---------|----------------|
+| `package.json` | `"engines": { "node": ">=24", "npm": ">=11" }` declara las versiones mínimas. |
+| `.npmrc` | `engine-strict=true` hace que `npm install` / `npm ci` **fallen con un error** si las versiones no cumplen `engines` (por defecto npm solo avisaría). |
+| `.nvmrc` | Indica `24` para [nvm](https://github.com/nvm-sh/nvm): desde la raíz del repo, `nvm install && nvm use`. |
+| `packageManager` | `npm@11.19.0` en `package.json`: con [Corepack](https://nodejs.org/api/corepack.html) (`corepack enable`) se usa esa versión exacta de npm. |
+
+Comprobar versiones con `node --version` y `npm --version`. Si no cumples el requisito, npm mostrará un error `EBADENGINE` antes de instalar nada.
 
 ---
 
