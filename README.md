@@ -123,16 +123,18 @@ Los enlaces del header *Por qué elegirnos, Clases, Planes, Opiniones y Pregunta
 - **npm 11+**
 - Angular CLI 22.2+ *(opcional: el proyecto incluye su propia copia y se puede usar con `npm`)*
 
-El requisito está **declarado en el proyecto**, no solo en esta documentación:
+El requisito está **declarado en el proyecto**, pero **no bloquea** el trabajo: si usas una versión anterior verás un aviso y podrás seguir compilando.
 
 | Archivo | Para qué sirve |
 |---------|----------------|
-| `package.json` | `"engines": { "node": ">=24", "npm": ">=11" }` declara las versiones mínimas. |
-| `.npmrc` | `engine-strict=true` hace que `npm install` / `npm ci` **fallen con un error** si las versiones no cumplen `engines` (por defecto npm solo avisaría). |
+| `package.json` | `"engines": { "node": ">=24", "npm": ">=11" }` declara las versiones mínimas recomendadas. |
+| `.npmrc` | `engine-strict=false`: npm muestra el aviso `EBADENGINE` pero **no falla**; además anula un `engine-strict=true` que puedas tener en tu configuración global. |
+| `scripts/check-versiones.mjs` | Compara las versiones instaladas con `engines` y `packageManager` y muestra un aviso (`⚠️`) por consola sin detener el proceso. |
+| Hooks `prestart`, `prebuild`, `prebuild:pages`, `prewatch`, `pretest` | Ejecutan el script anterior antes de arrancar, compilar o probar, para que el aviso aparezca también en esos comandos. |
 | `.nvmrc` | Indica `24` para [nvm](https://github.com/nvm-sh/nvm): desde la raíz del repo, `nvm install && nvm use`. |
 | `packageManager` | `npm@11.19.0` en `package.json`: con [Corepack](https://nodejs.org/api/corepack.html) (`corepack enable`) se usa esa versión exacta de npm. |
 
-Comprobar versiones con `node --version` y `npm --version`. Si no cumples el requisito, npm mostrará un error `EBADENGINE` antes de instalar nada.
+Comprobar versiones con `node --version` y `npm --version`. Si no cumples el requisito verás el aviso, pero `npm install`, `npm start` y `npm run build` continuarán. Ten en cuenta que una versión muy antigua puede hacer que la compilación falle por características no soportadas.
 
 ---
 
