@@ -4,6 +4,7 @@
     {{ logrosConseguidos() }} de {{ logros().length }} conseguidos
   </p>
 
+  <!-- Medallas: los logros pendientes se muestran atenuados como bloqueados -->
   <div class="grid-logros">
     @for (logro of logros(); track logro.id) {
       <div [class.bloqueado]="!logro.conseguido" [title]="logro.conseguido ? logro.descripcion : 'Logro bloqueado'"

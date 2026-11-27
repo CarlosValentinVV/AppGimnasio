@@ -1,5 +1,6 @@
 <section class="tarjeta tarjeta-perfil">
   <div class="cabecera-contenido">
+    <!-- Avatar: foto del usuario o, si no tiene, sus iniciales -->
     <div class="avatar-grande">
       @if (usuario().fotoUrl) {
         <img [alt]="'Foto de perfil de ' + usuario().nombre" [src]="usuario().fotoUrl" />
@@ -16,6 +17,7 @@
         <span class="chip">{{ usuario().ciudad }}</span>
       </div>
 
+      <!-- Nivel y barra de progreso calculada por el componente padre -->
       <div class="nivel">
         <div class="nivel-cabecera">
           <span class="nivel-nombre">{{ usuario().nivel }}</span>

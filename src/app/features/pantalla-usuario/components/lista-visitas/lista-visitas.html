@@ -2,6 +2,7 @@
   <h2 class="titulo-tarjeta">Actividad reciente</h2>
   <p class="subtitulo-tarjeta">Tus últimas visitas al gimnasio</p>
 
+  <!-- Historial de visitas: fecha, zona de entrenamiento y duración -->
   <ul class="lista-visitas">
     @for (visita of visitas(); track visita.fecha + visita.horaEntrada) {
       <li class="visita">

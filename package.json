@@ -3,14 +3,23 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "prestart": "node scripts/check-versiones.mjs",
     "start": "ng serve",
+    "prebuild": "node scripts/check-versiones.mjs",
     "build": "ng build",
+    "prebuild:pages": "node scripts/check-versiones.mjs",
     "build:pages": "ng build && node scripts/postbuild-pages.mjs",
+    "prewatch": "node scripts/check-versiones.mjs",
     "watch": "ng build --watch --configuration development",
+    "pretest": "node scripts/check-versiones.mjs",
     "test": "ng test"
   },
   "private": true,
   "packageManager": "npm@11.19.0",
+  "engines": {
+    "node": ">=24",
+    "npm": ">=11"
+  },
   "dependencies": {
     "@angular/common": "^22.2.1",
     "@angular/compiler": "^22.2.0",
